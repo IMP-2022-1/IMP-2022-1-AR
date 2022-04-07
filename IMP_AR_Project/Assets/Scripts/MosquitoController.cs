@@ -8,11 +8,13 @@ public class MosquitoController : MonoBehaviour
     public GameObject Player;
 
     // Field of Mosquito
-    public int MosquitoHP;
-    public int MosquitoDamage;
     private int MosquitoMovingChoice;
     private AudioSource MqAudioSource;
-    
+
+    // Accoding to kind of Mosquito, HP & Damage is different 
+    public int MosquitoHP = 1;
+    public int MosquitoDamage = 1;
+
     // Used in Moving
     private Vector3 OriPosition;
 
@@ -35,9 +37,6 @@ public class MosquitoController : MonoBehaviour
         // 0 : Rotating, 1 : Left and Right, 2 : Rotating Around Player
         MosquitoMovingChoice = Random.Range(0, 3);
         MqAudioSource = GetComponent<AudioSource>();
-        // Accoding to kind of Mosquito, HP & Damage is different 
-        MosquitoHP = 1;
-        MosquitoDamage = 1;
 
         // Change When Player Name Change!!!!!!!!!!!!!!!!!!!
         Player = GameObject.Find("Main Camera");
