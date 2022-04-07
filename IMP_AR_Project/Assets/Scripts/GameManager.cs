@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
 {
     public Text Timer;
     public Text ScoreCount;
-    public Text HP;
     public Player Player;
 
     public int Score = 0;
@@ -28,7 +27,6 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
-    // Update is called once per frame
     void Update()
     {
         // When Game Status is Play mode
@@ -38,11 +36,10 @@ public class GameManager : MonoBehaviour
 
             Timer.text = string.Format("{0:N1}", TimeLimit);
 
-            HP.text = Player.HP.ToString();
+            ScoreCount.text = Score.ToString() + " Kills";
 
-            ScoreCount.text = Score.ToString();
-
-            if (Player.HP <= 0 || TimeLimit <= 0)
+            // if Player were dead
+            if (Player.HP <= 0)
             {
                 GameOver.gameObject.SetActive(true);
 #if UNITY_EDITOR

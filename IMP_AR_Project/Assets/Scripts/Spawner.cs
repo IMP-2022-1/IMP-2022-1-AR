@@ -23,17 +23,20 @@ public class Spawner : MonoBehaviour
     {
         GameObject mosq = GameObject.FindGameObjectWithTag("Mosquito");
 
-        if (mosq == null)
+        if (GameManager.instance.gamestatus == 1)
         {
-            Debug.Log("1");
-            spawnEnable = true;
-        }
-        else
-            spawnEnable = false;
+            if (mosq == null)
+            {
+                Debug.Log("1");
+                spawnEnable = true;
+            }
+            else
+                spawnEnable = false;
 
-        if (spawnEnable)
-        {
-            spawnMosquito();
+            if (spawnEnable)
+            {
+                spawnMosquito();
+            }
         }
     }
 
