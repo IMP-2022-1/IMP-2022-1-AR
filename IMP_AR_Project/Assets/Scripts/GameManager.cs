@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public float TimeLimit = 10f;
     void Start()
     {
-        
+
     }
 
     private void Awake()
@@ -38,9 +38,13 @@ public class GameManager : MonoBehaviour
 
         ScoreCount.text = Score.ToString();
 
-        if(Player.HP <= 0)
+        if (Player.HP <= 0)
         {
+            UnityEditor.EditorApplication.isPlaying = false;
             GameOver.gameObject.SetActive(true);
         }
+
+        if (TimeLimit <= 0)
+            UnityEditor.EditorApplication.isPlaying = false;
     }
 }
