@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
 
     public GameObject Mosquito;
 
-    //½ºÆùÇÒ ¸ð±â ·¹º§ Ã¼Å©ÇÒ ÀÎ½ºÅÏ½º
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½
 
     // Start is called before the first frame update
     void Start()
@@ -41,5 +41,5 @@ public class Spawner : MonoBehaviour
         float randomZ = Random.Range(-5f, 5f);
 
         GameObject mosq = (GameObject)Instantiate(Mosquito, new Vector3(randomX, 0f, randomZ), Quaternion.identity);
-    } 
+    }
 }

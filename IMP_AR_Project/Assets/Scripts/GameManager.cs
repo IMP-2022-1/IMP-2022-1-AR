@@ -38,13 +38,10 @@ public class GameManager : MonoBehaviour
 
         ScoreCount.text = Score.ToString();
 
-        if (Player.HP <= 0)
+        if (Player.HP <= 0 || TimeLimit <= 0)
         {
-            UnityEditor.EditorApplication.isPlaying = false;
             GameOver.gameObject.SetActive(true);
+            Application.Quit();
         }
-
-        if (TimeLimit <= 0)
-            UnityEditor.EditorApplication.isPlaying = false;
     }
 }
