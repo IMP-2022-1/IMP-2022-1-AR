@@ -45,7 +45,11 @@ public class GameManager : MonoBehaviour
             if (Player.HP <= 0 || TimeLimit <= 0)
             {
                 GameOver.gameObject.SetActive(true);
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
                 Application.Quit();
+#endif
             }
         }
     }

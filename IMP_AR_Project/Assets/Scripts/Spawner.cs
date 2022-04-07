@@ -8,12 +8,14 @@ public class Spawner : MonoBehaviour
 
     public GameObject Mosquito;
 
-    //������ ��� ���� üũ�� �ν��Ͻ�
+    //?????? ??? ???? ???? ?��????
 
     // Start is called before the first frame update
     void Start()
     {
-        spawnMosquito();
+        //If Game is Play mode, It will work.
+        if (GameManager.instance.gamestatus == 1)
+            spawnMosquito();
     }
 
     // Update is called once per frame
