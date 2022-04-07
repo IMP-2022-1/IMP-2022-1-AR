@@ -13,4 +13,17 @@ public class UIManager : MonoBehaviour
         mainScreen.gameObject.SetActive(false);
         playScreen.gameObject.SetActive(true);
     }
+
+
+    public void mainQuit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+    }
+#else
+        Application.Quit();
+    }
+#endif
 }
+
+
