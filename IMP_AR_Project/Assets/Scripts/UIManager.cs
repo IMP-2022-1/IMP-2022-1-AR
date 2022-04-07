@@ -7,14 +7,15 @@ public class UIManager : MonoBehaviour
     public GameObject mainScreen;
     public GameObject playScreen;
 
-    // Button Feature
+    // Start Button
     public void mainStart()
     {
         mainScreen.gameObject.SetActive(false);
         playScreen.gameObject.SetActive(true);
+        GameManager.instance.gamestatus = 1;
     }
 
-
+    //Quit Button
     public void mainQuit()
     {
 #if UNITY_EDITOR
