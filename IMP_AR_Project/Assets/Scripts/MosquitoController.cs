@@ -63,8 +63,6 @@ public class MosquitoController : MonoBehaviour
 
     }
 
-
-    // *MosquitoAttack
     public void MosquitoAttack()
     {
         /* Player HP_Down
@@ -105,8 +103,6 @@ public class MosquitoController : MonoBehaviour
         animator.SetBool(Attack, false);
     }
 
-
-    // *MosquitoMoving
     public void MosquitoMoving()
     {
         if (MosquitoMovingChoice == 0)
