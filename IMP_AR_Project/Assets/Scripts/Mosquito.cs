@@ -6,15 +6,15 @@ public class Mosquito : MonoBehaviour
 {
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
 
-        if(GameManager.instance.TimeLimit <= 0)
+
+        if (GameManager.instance.TimeLimit <= 0)
         {
             attack();
             GameManager.instance.TimeLimit = 10f;

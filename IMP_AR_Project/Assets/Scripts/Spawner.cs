@@ -8,12 +8,14 @@ public class Spawner : MonoBehaviour
 
     public GameObject Mosquito;
 
-    //스폰할 모기 레벨 체크할 인스턴스
+    //?????? ??? ???? ???? ?ν????
 
     // Start is called before the first frame update
     void Start()
     {
-        spawnMosquito();
+        //If Game is Play mode, It will work.
+        if (GameManager.instance.gamestatus == 1)
+            spawnMosquito();
     }
 
     // Update is called once per frame
@@ -21,17 +23,20 @@ public class Spawner : MonoBehaviour
     {
         GameObject mosq = GameObject.FindGameObjectWithTag("Mosquito");
 
-        if (mosq == null)
+        if (GameManager.instance.gamestatus == 1)
         {
-            Debug.Log("1");
-            spawnEnable = true;
-        }
-        else
-            spawnEnable = false;
+            if (mosq == null)
+            {
+                Debug.Log("1");
+                spawnEnable = true;
+            }
+            else
+                spawnEnable = false;
 
-        if (spawnEnable)
-        {
-            spawnMosquito();
+            if (spawnEnable)
+            {
+                spawnMosquito();
+            }
         }
     }
 
@@ -41,5 +46,5 @@ public class Spawner : MonoBehaviour
         float randomZ = Random.Range(-5f, 5f);
 
         GameObject mosq = (GameObject)Instantiate(Mosquito, new Vector3(randomX, 0f, randomZ), Quaternion.identity);
-    } 
+    }
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MosquitoController : MonoBehaviour
 {
-
     public GameObject Player;
 
     // Field of Mosquito
@@ -29,7 +28,7 @@ public class MosquitoController : MonoBehaviour
     // Used in Moving 2
     private bool RightLeft;
 
-   
+
 
     // Start is called before the first frame update
     void Start()
@@ -64,9 +63,7 @@ public class MosquitoController : MonoBehaviour
 
     }
 
-
-    // *MosquitoAttack
-    public void MosquitoAttack ()
+    public void MosquitoAttack()
     {
         /* Player HP_Down
          * Player.GetComponent<Script Name>().HP -= Damage;
@@ -106,9 +103,7 @@ public class MosquitoController : MonoBehaviour
         animator.SetBool(Attack, false);
     }
 
-
-    // *MosquitoMoving
-    public void MosquitoMoving ()
+    public void MosquitoMoving()
     {
         if (MosquitoMovingChoice == 0)
         {
@@ -142,7 +137,7 @@ public class MosquitoController : MonoBehaviour
         }
     }
 
-    public RotatingInformation DecidingCenter ()
+    public RotatingInformation DecidingCenter()
     {
         float x, y, z;
         float OriPositionMag = OriPosition.magnitude;
