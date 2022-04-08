@@ -23,7 +23,6 @@ public class Spawner : MonoBehaviour
 
         if (mosq == null)
         {
-            Debug.Log("1");
             spawnEnable = true;
         }
         else
