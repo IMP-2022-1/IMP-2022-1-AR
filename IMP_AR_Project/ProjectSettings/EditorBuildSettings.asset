@@ -9,5 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Gotcha.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
+    Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: aa46a66d332812a41ae4d8be6b7bfb0e, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: bbf0868aa430b1740883ddc4ed6cb4d0, type: 2}
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: ee53aab2600c787488c264d348ee2020, type: 2}
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: ecca88f3da52998459d6afaa83198286, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 69a1bd45a1a399f46baf786eda0617e4, type: 2}
