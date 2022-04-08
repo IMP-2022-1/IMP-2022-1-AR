@@ -7,10 +7,12 @@ public class MosquitoController : MonoBehaviour
     public GameObject Player;
 
     // Field of Mosquito
-    public int MosquitoHP;
-    public int MosquitoDamage;
     private int MosquitoMovingChoice;
     private AudioSource MqAudioSource;
+
+    // Accoding to kind of Mosquito, HP & Damage is different 
+    public int MosquitoHP = 1;
+    public int MosquitoDamage = 1;
 
     // Used in Moving
     private Vector3 OriPosition;
@@ -31,12 +33,9 @@ public class MosquitoController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // 0 : Rotating, 1 : Left and Right, 2 : Rotating Around Player
-        MosquitoMovingChoice = Random.Range(0, 3);
+        // 0 : Rotating, 1 : Left and Right, 2 : Rotating Around Player, 3: rotating circle
+        MosquitoMovingChoice = Random.Range(0, 4);
         MqAudioSource = GetComponent<AudioSource>();
-        // Accoding to kind of Mosquito, HP & Damage is different 
-        MosquitoHP = 1;
-        MosquitoDamage = 1;
 
         // Change When Player Name Change!!!!!!!!!!!!!!!!!!!
         Player = GameObject.Find("Main Camera");
@@ -60,22 +59,54 @@ public class MosquitoController : MonoBehaviour
             MqAudioSource.Play();
         }
 
+        transform.LookAt(Player.transform.position);
+
     }
 
+
+    // *MosquitoAttack
     public void MosquitoAttack()
     {
-        /*
-         * Player.GetComponent<Script Name>().HP -= 1;
+        /* Player HP_Down
+         * Player.GetComponent<Script Name>().HP -= Damage;
          * GameObject.Find("GameManager").GetComponent<Script Name>().LifHUD();
          */
 
-        GameManager.instance.Player.HP--;
-        /*
+        //GameManager.instance.Player.HP--;
+
+        /* Sound 
+        * GetComponent<AudioSource>().Play(); - Choose Attack Sound Clip Seperately exist OR AudioSource Seperetely exist
+        * AudioSource -> List<AudioSource> ** = GetComponents<AudioSource>() and check index
+        * Clip -> this Script has sound clip and replace when attack occur
+        */
+
+        /* Attack
+        * To Destroy Mosquito When Animator over
+        * When attack occur Mosquito invincibility until attack animation over
+        * Then Destroy Mosquito
+        * I make this about Coroutine but this can be change about Animation State
+        */
+        StartCoroutine("Attack");
+
+        /* Destroy
          * Destroy(this.transform.gameObject);
          * OR GameObject.Find("spawner").GetComponent<Script Name>().DestoryMosquito();
         */
     }
 
+    IEnumerator Attack()
+    {
+        Animator animator = GetComponent<Animator>();
+        int Attack = Animator.StringToHash("Attack");
+        animator.SetBool(Attack, true);
+
+        yield return new WaitForSeconds(0.4f);
+
+        animator.SetBool(Attack, false);
+    }
+
+
+    // *MosquitoMoving
     public void MosquitoMoving()
     {
         if (MosquitoMovingChoice == 0)
@@ -102,6 +133,11 @@ public class MosquitoController : MonoBehaviour
         else if (MosquitoMovingChoice == 2)
         {
             transform.RotateAround(Player.transform.position, Vector3.up, Time.deltaTime * transform.localScale.magnitude * 30);
+        }
+        else if (MosquitoMovingChoice == 3)
+        {
+            float MagnitudeOfScale = transform.localScale.magnitude;
+            transform.RotateAround(OriPosition - transform.localScale / 3, Vector3.back, Time.deltaTime * MagnitudeOfScale * 500);
         }
     }
 
