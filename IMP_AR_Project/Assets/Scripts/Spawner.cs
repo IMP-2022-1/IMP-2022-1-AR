@@ -4,47 +4,50 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public bool spawnEnable;
+    // Having Prefabs about Mosquitos
+    public GameObject[] MosquitoPrefab;
 
-    public GameObject Mosquito;
+    // Having Created Mosquitos's GameObject
+    public List<GameObject> Mosquitos;
 
-    //?????? ??? ???? ???? ?¥í????
+    private bool spawnEnable;
+    public float distance = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        //If Game is Play mode, It will work.
-        if (GameManager.instance.gamestatus == 1)
-            spawnMosquito();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        GameObject mosq = GameObject.FindGameObjectWithTag("Mosquito");
 
-        if (GameManager.instance.gamestatus == 1)
-        {
-            if (mosq == null)
-            {
-                Debug.Log("1");
-                spawnEnable = true;
-            }
-            else
-                spawnEnable = false;
-
-            if (spawnEnable)
-            {
-                spawnMosquito();
-            }
-        }
     }
 
-    void spawnMosquito()
+    public void spawnMosquito()
     {
-        float randomX = Random.Range(-5f, 5f);
-        float randomZ = Random.Range(-5f, 5f);
+        // if spawnEnable true -> Animation can't occur 
+        // Don't Need?
 
-        GameObject mosq = (GameObject)Instantiate(Mosquito, new Vector3(randomX, 0f, randomZ), Quaternion.identity);
+        Vector3 MosquitoPosition;
+        MosquitoPosition = Random.onUnitSphere * distance;
+        if (MosquitoPosition.y < 0)
+            MosquitoPosition.y *= -1;
+
+        // !!!!! diversification MosquitoPrefabs when difficulty UP!
+        // MUST HAVE MosquitoPrefab has Prefabs
+        GameObject MosquitoObject = Instantiate(MosquitoPrefab[0], MosquitoPosition, Quaternion.identity);
+        Mosquitos.Add(MosquitoObject);
+
+        spawnEnable = false;
+    }
+
+
+    // if Mosquito many -> 1. hp check / 2. method have argument 
+    // if 2 -> Mosquitos is struct or Dictionary (struct : index check / dictionary : key check)
+    public void destroyMosquito()
+    {
+        Destroy(Mosquitos[0]);
     }
 }

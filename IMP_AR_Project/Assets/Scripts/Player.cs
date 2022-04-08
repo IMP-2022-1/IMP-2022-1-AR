@@ -20,43 +20,23 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+
+
+        if (Input.touchCount == 0) return;
+
+        Ray ray;
+        RaycastHit hit;
+
+        ray = arCamera.ScreenPointToRay(Input.GetTouch(0).position);
+
+        Physics.Raycast(ray, out hit);
+
+        if (hit.collider != null && hit.transform.gameObject.CompareTag("Mosquito"))
         {
-            Ray ray;
-            RaycastHit hit;
-
-            ray = arCamera.ScreenPointToRay(Input.mousePosition);
-
-            Physics.Raycast(ray, out hit);
-
-            if (hit.collider != null && hit.transform.gameObject.CompareTag("Mosquito"))
-            {
-                Destroy(hit.transform.gameObject);
-                GameManager.instance.Score++;
-                GameManager.instance.TimeLimit = 10f;
-            }
+            Destroy(hit.transform.gameObject);
+            GameManager.instance.Score++;
+            GameManager.instance.TimeLimit = 10f;
         }
-
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            this.transform.Rotate(-3f, 0, 0);
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            this.transform.Rotate(3f, 0, 0);
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            this.transform.Rotate(0, -3f, 0);
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            this.transform.Rotate(0, 3f, 0);
-        }
-
     }
+
 }
