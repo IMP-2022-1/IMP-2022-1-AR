@@ -10,17 +10,39 @@ public class Spawner : MonoBehaviour
     // Having Created Mosquitos's GameObject
     public List<GameObject> Mosquitos;
 
+    // Deside we need mosquito
     private bool spawnEnable;
+
+    // Varialbe for dicide limition of mosquito's spawn locaiton
     public float distance = 1;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Set spawnEnable to false as defalut vaule
+        spawnEnable = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Mosquitos[0] == null)
+        {
+            Debug.Log("We have no mosquito");
+            spawnEnable = true;
+        }
+        else
+        {
+            spawnEnable = false;
+        }
+
+        // If spawndEnable is true, call spawnMosquito()
+        if (spawnEnable){
+            spawnMosquito();
+        }
+        destroyMosquito();
+
+
 
     }
 
@@ -47,6 +69,11 @@ public class Spawner : MonoBehaviour
     // if 2 -> Mosquitos is struct or Dictionary (struct : index check / dictionary : key check)
     public void destroyMosquito()
     {
-        Destroy(Mosquitos[0]);
+        // if TimeLimit == 0, destroy Mosquito
+        if(GameManager.instance.TimeLimit == 0)
+        {
+            Destroy(Mosquitos[0]);
+        }
+        
     }
 }
