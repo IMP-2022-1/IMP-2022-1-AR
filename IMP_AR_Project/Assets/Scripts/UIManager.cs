@@ -7,6 +7,9 @@ public class UIManager : MonoBehaviour
     public GameObject mainScreen;
     public GameObject playScreen;
     public GameObject HPBlood;
+    public CanvasGroup Main_Cover;
+    public CanvasGroup BeginInside_Cover;
+    public CanvasGroup Begin_Cover;
     private int HP;
     private GameObject life;
     private RectTransform lifeRect;
@@ -59,8 +62,46 @@ public class UIManager : MonoBehaviour
         lifeList[HP].SetActive(false);
     }
 
+    public void Start()
+    {
+        Begin_Cover.alpha = 1;
+        BeginInside_Cover.alpha = 0;
+        Main_Cover.alpha = 0;
+    }
+
+    // Show the notice before start the game
+    IEnumerator DoFade()
+    {
+        CanvasGroup canvasGroup = BeginInside_Cover;
+        while (canvasGroup.alpha < 1)
+        {
+            canvasGroup.alpha += Time.deltaTime * 0.2f;
+            yield return new WaitForSeconds(.2f);
+        }
+        canvasGroup.interactable = false;
+        yield return new WaitForSeconds(3f);
+
+        while (canvasGroup.alpha > 0)
+        {
+            canvasGroup.alpha -= Time.deltaTime * 0.2f;
+            yield return new WaitForSeconds(.2f);
+        }
+        canvasGroup.interactable = false;
+        yield return new WaitForSeconds(2f);
+
+        Begin_Cover.alpha = 0;
+        Main_Cover.alpha = 1;
+        yield return null;
+    }
+
     public void Update()
     {
+        // Start status
+        if (GameManager.instance.gamestatus == 0)
+        {
+            StartCoroutine(DoFade());
+        }
+
         // Turn the Game Mode UI on (like Awake status)
         if (GameManager.instance.gamestatus == 1)
         {
