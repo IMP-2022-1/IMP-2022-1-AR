@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     private int HP;
     private GameObject life;
     private RectTransform lifeRect;
+    List<GameObject> lifeList = new List<GameObject>();
 
     // Start Button
     public void mainStart()
@@ -37,12 +38,13 @@ public class UIManager : MonoBehaviour
         // Interval of image
         int interval = 20;
 
-        for (int i = 0; i < HP; i++)
+        for (int i = 0; i < HP + 1; i++)
         {
-            life = Instantiate(HPBlood, new Vector2(0, 0), Quaternion.Euler(0, 0, 0), GameObject.Find("Screen").transform);
+            life = Instantiate(HPBlood, new Vector2(0, 0), Quaternion.Euler(0, 0, 0), GameObject.Find("Screen").transform) as GameObject;
             lifeRect = life.GetComponent<RectTransform>();
             lifeRect.anchoredPosition = new Vector2(105 - i * interval, -215);
             life.transform.parent = playScreen.transform;
+            lifeList.Add(life);
         }
 
         // Play Check
@@ -52,13 +54,9 @@ public class UIManager : MonoBehaviour
     private void UI_HPControl()
     {
         HP = GameObject.Find("AR Camera").GetComponent<Player>().HP;
-        int standard = 0;
 
         // if HP is changed by Mosquitos
-        if (HP != standard && standard != 0)
-            Destroy(life);
-
-        standard = HP;
+        lifeList[HP].SetActive(false);
     }
 
     public void Update()
@@ -74,7 +72,7 @@ public class UIManager : MonoBehaviour
         if (GameManager.instance.gamestatus == 2)
         {
             // Control HP Icon
-            //      UI_HPControl();
+            UI_HPControl();
         }
 
         // Game Over!
