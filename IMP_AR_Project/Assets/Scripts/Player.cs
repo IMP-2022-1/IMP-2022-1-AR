@@ -22,20 +22,35 @@ public class Player : MonoBehaviour
     {
 
 
-        if (Input.touchCount == 0) return;
-
-        Ray ray;
-        RaycastHit hit;
-
-        ray = arCamera.ScreenPointToRay(Input.GetTouch(0).position);
-
-        Physics.Raycast(ray, out hit);
-
-        if (hit.collider != null && hit.transform.gameObject.CompareTag("Mosquito"))
+        if (Input.touchCount > 0)
         {
-            Destroy(hit.transform.gameObject);
-            GameManager.instance.Score++;
-            GameManager.instance.TimeLimit = 10f;
+
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+
+                Ray ray;
+                RaycastHit hit;
+
+                ray = arCamera.ScreenPointToRay(touch.position);
+
+                Physics.Raycast(ray, out hit);
+
+                if (hit.collider != null && hit.transform.gameObject.CompareTag("Mosquito"))
+                {
+                    MosquitoController raycastedMosquito = hit.collider.gameObject.GetComponent<MosquitoController>();
+                    raycastedMosquito.MosquitoHP -= 1;
+                    if (raycastedMosquito.MosquitoHP <= 0)
+                    {
+                        Destroy(hit.transform.gameObject);
+                        GameManager.instance.Score++;
+                        GameManager.instance.TimeLimit = 10f;
+                    }
+
+
+                }
+            }
         }
     }
 
