@@ -33,9 +33,6 @@ public class GameManager : MonoBehaviour
         if (GameManager.instance.gamestatus == 1)
         {
             TimeLimit -= Time.deltaTime;
-
-            Timer.text = string.Format("{0:N1}", TimeLimit);
-
             ScoreCount.text = Score.ToString() + " Kills";
 
             // if Player were dead

@@ -28,15 +28,16 @@ public class UIManager : MonoBehaviour
     }
 #endif
 
-    // //UI about HP
-    // private void UI_HP()
-    // {
-    //     HP = GameObejct.Find("AR Camera").GetComponent<Player>().HP;
-    //     int interval = 25;
+    //UI about HP
+    private void UI_HP()
+    {
+        HP = GameObejct.Find("AR Camera").GetComponent<Player>().HP;
+        // Interval of image
+        int interval = 20;
 
-    //     for (int i = 0; i < HP; i++)
-    //         Instantiate(HPBlood, new Vector3(-500, -255 + i * interval, 0), Quaternion.Euler(0, 0, 0));
-    // }
+        for (int i = 0; i < HP; i++)
+            Instantiate(HPBlood, new Vector3(105 + i * interval, -215, 0), Quaternion.Euler(0, 0, 0));
+    }
 
     public void Update()
     {
