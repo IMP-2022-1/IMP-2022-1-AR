@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
     public GameObject playScreen;
     public GameObject HPBlood;
     private int HP;
+    private GameObject life;
+    private RectTransform lifeRect;
 
     // Start Button
     public void mainStart()
@@ -31,21 +33,29 @@ public class UIManager : MonoBehaviour
     //UI about HP
     private void UI_HP()
     {
-        HP = GameObejct.Find("AR Camera").GetComponent<Player>().HP;
+        HP = GameObject.Find("AR Camera").GetComponent<Player>().HP;
         // Interval of image
         int interval = 20;
 
         for (int i = 0; i < HP; i++)
-            Instantiate(HPBlood, new Vector3(105 + i * interval, -215, 0), Quaternion.Euler(0, 0, 0));
+        {
+            life = Instantiate(HPBlood, new Vector2(0, 0), Quaternion.Euler(0, 0, 0), GameObject.Find("Screen").transform);
+            lifeRect = life.GetComponent<RectTransform>();
+            lifeRect.anchoredPosition = new Vector2(105 - i * interval, -215);
+            life.transform.parent = playScreen.transform;
+        }
+
+        // Play Check
+        GameManager.instance.gamestatus = 2;
     }
 
     public void Update()
     {
-        // // Turn the Game Mode UI on
-        // if (GameManager.instance.gamestatus == 1)
-        // {
-        //     UI_HP();
-        // }
+        // Turn the Game Mode UI on
+        if (GameManager.instance.gamestatus == 1)
+        {
+            UI_HP();
+        }
     }
 }
 

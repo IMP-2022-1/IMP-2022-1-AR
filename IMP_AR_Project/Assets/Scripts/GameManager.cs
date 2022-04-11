@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     // Check the gameStatus
     // 0 = Main
     // 1 = Play
+    // 2 = Play Checked
     public int gamestatus = 0;
 
     private void Awake()
@@ -30,7 +31,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // When Game Status is Play mode
-        if (GameManager.instance.gamestatus == 1)
+        if (GameManager.instance.gamestatus >= 1)
         {
             TimeLimit -= Time.deltaTime;
             ScoreCount.text = Score.ToString() + " Kills";
