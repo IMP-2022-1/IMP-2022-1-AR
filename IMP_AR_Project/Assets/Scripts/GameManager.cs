@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     // 0 = Main
     // 1 = Play
     // 2 = Play Checked
+    // 3 = Game Over
     public int gamestatus = 0;
 
     private void Awake()

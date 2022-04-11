@@ -90,7 +90,15 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         Begin_Cover.alpha = 0;
-        Main_Cover.alpha = 1;
+
+        CanvasGroup canvasGroup2 = Main_Cover;
+        while (canvasGroup2.alpha < 1)
+        {
+            canvasGroup2.alpha += Time.deltaTime * 0.4f;
+            yield return new WaitForSeconds(.2f);
+        }
+
+        yield return new WaitForSeconds(3f);
         yield return null;
     }
 
