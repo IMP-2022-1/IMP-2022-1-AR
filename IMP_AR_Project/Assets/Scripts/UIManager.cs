@@ -49,12 +49,39 @@ public class UIManager : MonoBehaviour
         GameManager.instance.gamestatus = 2;
     }
 
+    private void UI_HPControl()
+    {
+        HP = GameObject.Find("AR Camera").GetComponent<Player>().HP;
+        int standard = 0;
+
+        // if HP is changed by Mosquitos
+        if (HP != standard && standard != 0)
+            Destroy(life);
+
+        standard = HP;
+    }
+
     public void Update()
     {
-        // Turn the Game Mode UI on
+        // Turn the Game Mode UI on (like Awake status)
         if (GameManager.instance.gamestatus == 1)
         {
+            // Show HP Icon
             UI_HP();
+        }
+
+        // If Player still play the game
+        if (GameManager.instance.gamestatus == 2)
+        {
+            // Control HP Icon
+            //      UI_HPControl();
+        }
+
+        // Game Over!
+        if (GameManager.instance.gamestatus == 3)
+        {
+            // show the Game over
+            GameManager.instance.GameOver.gameObject.SetActive(true);
         }
     }
 }

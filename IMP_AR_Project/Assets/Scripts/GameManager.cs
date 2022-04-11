@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public Text Timer;
     public Text ScoreCount;
     public Player Player;
-
+    public Slider TimerBar;
     public int Score = 0;
 
     public static GameManager instance;
@@ -30,16 +30,34 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // When Game Status is Play mode
-        if (GameManager.instance.gamestatus >= 1)
+        // When Game Status is Playing mode
+        if (GameManager.instance.gamestatus == 2)
         {
+            ///////Timer
             TimeLimit -= Time.deltaTime;
+            Timer.text = TimeLimit.ToString("F1");
+            TimerBar.value -= Time.deltaTime / 10.0f;
+
+            if (TimerBar.value <= 0)
+                TimerBar.transform.Find("Fill Area").gameObject.SetActive(false);
+            else
+                TimerBar.transform.Find("Fill Area").gameObject.SetActive(true);
+
+            // if Timer were End
+            if (TimeLimit <= 0)
+            {
+                // Player Life -1 and Time Reset
+                Player.HP--;
+                TimeLimit = 10f;
+                TimerBar.value = 1;
+            }
+
+            ///////Score
             ScoreCount.text = Score.ToString() + " Kills";
 
             // if Player were dead
             if (Player.HP <= 0)
             {
-                GameOver.gameObject.SetActive(true);
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
 #else
