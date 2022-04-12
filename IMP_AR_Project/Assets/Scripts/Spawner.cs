@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
     public GameObject[] MosquitoPrefab;
 
     // Having Created Mosquitos's GameObject
-    public List<GameObject> Mosquitos;
+    public List<GameObject> Mosquitos = new List<GameObject>();
 
     // Deside we need mosquito
     private bool spawnEnable;
@@ -20,30 +20,18 @@ public class Spawner : MonoBehaviour
     void Start()
     {
         // Set spawnEnable to false as defalut vaule
-        spawnEnable = false;
+        spawnEnable = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Mosquitos[0] == null)
-        {
-            Debug.Log("We have no mosquito");
-            spawnEnable = true;
-        }
-        else
-        {
-            spawnEnable = false;
-        }
-
         // If spawndEnable is true, call spawnMosquito()
-        if (spawnEnable){
+        if (spawnEnable)
+        {
             spawnMosquito();
         }
         destroyMosquito();
-
-
-
     }
 
     public void spawnMosquito()
@@ -70,10 +58,14 @@ public class Spawner : MonoBehaviour
     public void destroyMosquito()
     {
         // if TimeLimit == 0, destroy Mosquito
-        if(GameManager.instance.TimeLimit == 0)
+        //!!!!!!!! -> Please Check!!!!!!!!!
+        if (GameManager.instance.TimeLimit <= 0)
         {
             Destroy(Mosquitos[0]);
+
+            spawnEnable = true;
         }
-        
+
     }
 }
+
