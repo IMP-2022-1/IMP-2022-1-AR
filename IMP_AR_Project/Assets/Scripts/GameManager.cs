@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     // 1 = Play
     // 2 = Play Checked
     // 3 = Game Over
+    // 4 = Player was Damaged
     public int gamestatus = 0;
 
     private void Awake()
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour
                 Player.HP--;
                 TimeLimit = 10f;
                 TimerBar.value = 1;
+                GameManager.instance.gamestatus = 4;
             }
 
             ///////Score

@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour
     }
 #endif
 
-    //UI about HP
+    //UI about HP (Instantiate)
     private void UI_HP()
     {
         HP = GameObject.Find("AR Camera").GetComponent<Player>().HP;
@@ -54,14 +54,23 @@ public class UIManager : MonoBehaviour
         GameManager.instance.gamestatus = 2;
     }
 
+    // UI Control About HP
     private void UI_HPControl()
     {
         HP = GameObject.Find("AR Camera").GetComponent<Player>().HP;
 
         // if HP is changed by Mosquitos
         lifeList[HP].SetActive(false);
+
+        // Damage Effects
+        if (GameManager.instance.gamestatus == 4)
+        {
+            // Damage effect content
+            GameManager.instance.gamestatus = 2;
+        }
     }
 
+    // Initial Valuable
     public void Start()
     {
         Begin_Cover.alpha = 1;
@@ -117,8 +126,8 @@ public class UIManager : MonoBehaviour
             UI_HP();
         }
 
-        // If Player still play the game
-        if (GameManager.instance.gamestatus == 2)
+        // If Player still play the game Or Player was attacked by Mosquitos
+        if (GameManager.instance.gamestatus == 2 && GameManager.instance.gamestatus == 4)
         {
             // Control HP Icon
             UI_HPControl();
