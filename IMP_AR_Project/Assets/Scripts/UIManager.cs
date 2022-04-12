@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public CanvasGroup Main_Cover;
     public CanvasGroup BeginInside_Cover;
     public CanvasGroup Begin_Cover;
+    public CanvasGroup Damage_Cover;
     private int HP;
     private GameObject life;
     private RectTransform lifeRect;
@@ -65,7 +66,7 @@ public class UIManager : MonoBehaviour
         // Damage Effects
         if (GameManager.instance.gamestatus == 4)
         {
-            // Damage effect content
+            StartCoroutine(DamageFade());
             GameManager.instance.gamestatus = 2;
         }
     }
@@ -76,47 +77,17 @@ public class UIManager : MonoBehaviour
         Begin_Cover.alpha = 1;
         BeginInside_Cover.alpha = 0;
         Main_Cover.alpha = 0;
+        StartCoroutine(DoFade());
     }
 
     // Show the notice before start the game
-    IEnumerator DoFade()
-    {
-        CanvasGroup canvasGroup = BeginInside_Cover;
-        while (canvasGroup.alpha < 1)
-        {
-            canvasGroup.alpha += Time.deltaTime * 0.2f;
-            yield return new WaitForSeconds(.2f);
-        }
-        canvasGroup.interactable = false;
-        yield return new WaitForSeconds(3f);
-
-        while (canvasGroup.alpha > 0)
-        {
-            canvasGroup.alpha -= Time.deltaTime * 0.2f;
-            yield return new WaitForSeconds(.2f);
-        }
-        canvasGroup.interactable = false;
-        yield return new WaitForSeconds(2f);
-
-        Begin_Cover.alpha = 0;
-
-        CanvasGroup canvasGroup2 = Main_Cover;
-        while (canvasGroup2.alpha < 1)
-        {
-            canvasGroup2.alpha += Time.deltaTime * 0.4f;
-            yield return new WaitForSeconds(.2f);
-        }
-
-        yield return new WaitForSeconds(3f);
-        yield return null;
-    }
 
     public void Update()
     {
         // Start status
         if (GameManager.instance.gamestatus == 0)
         {
-            StartCoroutine(DoFade());
+
         }
 
         // Turn the Game Mode UI on (like Awake status)
@@ -127,7 +98,7 @@ public class UIManager : MonoBehaviour
         }
 
         // If Player still play the game Or Player was attacked by Mosquitos
-        if (GameManager.instance.gamestatus == 2 && GameManager.instance.gamestatus == 4)
+        if (GameManager.instance.gamestatus == 2 || GameManager.instance.gamestatus == 4)
         {
             // Control HP Icon
             UI_HPControl();
@@ -140,6 +111,64 @@ public class UIManager : MonoBehaviour
             GameManager.instance.GameOver.gameObject.SetActive(true);
         }
     }
+
+    // Manage the IEumerator (repeat)
+
+    // Start Display
+    IEnumerator DoFade()
+    {
+        CanvasGroup canvasGroup = BeginInside_Cover;
+        yield return new WaitForSeconds(.5f);
+
+        while (canvasGroup.alpha < 1)
+        {
+            canvasGroup.alpha += Time.deltaTime * 0.75f;
+            yield return new WaitForSeconds(.0005f);
+        }
+        canvasGroup.interactable = false;
+        yield return new WaitForSeconds(3f);
+
+        while (canvasGroup.alpha > 0)
+        {
+            canvasGroup.alpha -= Time.deltaTime * .75f;
+            yield return new WaitForSeconds(.0005f);
+        }
+        canvasGroup.interactable = false;
+        yield return new WaitForSeconds(2f);
+
+        Begin_Cover.alpha = 0;
+
+        CanvasGroup canvasGroup2 = Main_Cover;
+        while (canvasGroup2.alpha < 1)
+        {
+            canvasGroup2.alpha += Time.deltaTime * 2f;
+            yield return new WaitForSeconds(.0005f);
+        }
+
+        yield return new WaitForSeconds(3f);
+        yield return null;
+    }
+
+    // Damage Effects
+
+    IEnumerator DamageFade()
+    {
+        CanvasGroup canvasGroup = Damage_Cover;
+        while (canvasGroup.alpha < 1)
+        {
+            canvasGroup.alpha += Time.deltaTime * 20f;
+            yield return new WaitForSeconds(.005f);
+        }
+        yield return new WaitForSeconds(.01f);
+
+        while (canvasGroup.alpha > 0)
+        {
+            canvasGroup.alpha -= Time.deltaTime * 20f;
+            yield return new WaitForSeconds(.005f);
+        }
+        yield return null;
+    }
+
 }
 
 
