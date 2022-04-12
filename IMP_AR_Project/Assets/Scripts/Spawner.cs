@@ -16,7 +16,6 @@ public class Spawner : MonoBehaviour
     // Varialbe for dicide limition of mosquito's spawn locaiton
     public float distance = 1;
 
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -51,9 +50,6 @@ public class Spawner : MonoBehaviour
     {
         // if spawnEnable true -> Animation can't occur 
         // Don't Need?
-        
-        // Variable for spawn different kind of MosquitoPrefab
-        int randomNum = Random.Range(0, 4);
 
         Vector3 MosquitoPosition;
         MosquitoPosition = Random.onUnitSphere * distance;
@@ -62,7 +58,7 @@ public class Spawner : MonoBehaviour
 
         // !!!!! diversification MosquitoPrefabs when difficulty UP!
         // MUST HAVE MosquitoPrefab has Prefabs
-        GameObject MosquitoObject = Instantiate(MosquitoPrefab[randomNum], MosquitoPosition, Quaternion.identity);
+        GameObject MosquitoObject = Instantiate(MosquitoPrefab[0], MosquitoPosition, Quaternion.identity);
         Mosquitos.Add(MosquitoObject);
 
         spawnEnable = false;
