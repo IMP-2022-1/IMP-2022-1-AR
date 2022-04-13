@@ -50,6 +50,7 @@ public class Spawner : MonoBehaviour
     {
         // if spawnEnable true -> Animation can't occur 
         // Don't Need?
+        int randomNum = Random.Range(0, 4);
 
         Vector3 MosquitoPosition;
         MosquitoPosition = Random.onUnitSphere * distance;
@@ -58,7 +59,7 @@ public class Spawner : MonoBehaviour
 
         // !!!!! diversification MosquitoPrefabs when difficulty UP!
         // MUST HAVE MosquitoPrefab has Prefabs
-        GameObject MosquitoObject = Instantiate(MosquitoPrefab[0], MosquitoPosition, Quaternion.identity);
+        GameObject MosquitoObject = Instantiate(MosquitoPrefab[randomNum], MosquitoPosition, Quaternion.identity);
         Mosquitos.Add(MosquitoObject);
 
         spawnEnable = false;
