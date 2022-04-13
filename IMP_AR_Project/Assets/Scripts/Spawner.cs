@@ -61,10 +61,21 @@ public class Spawner : MonoBehaviour
         //!!!!!!!! -> Please Check!!!!!!!!!
         if (GameManager.instance.TimeLimit <= 0)
         {
+            Mosquitos[0].GetComponent<MosquitoController>().MosquitoAttack(); // ;;;; This is veryveryvery not clean;;;
             Destroy(Mosquitos[0]);
 
             spawnEnable = true;
         }
+
+    }
+
+    public void playerDestroyMosquito()
+    {
+        Mosquitos.Remove(Mosquitos[0]);
+
+        spawnEnable = true;
+
+        // Player -> Mosquito Destroy, Spawner -> Mosquito Destroy : Clear? Intergrated?
 
     }
 }

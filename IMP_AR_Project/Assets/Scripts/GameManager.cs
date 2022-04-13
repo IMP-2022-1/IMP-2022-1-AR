@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject GameOver;
 
-    public float TimeLimit = 10f;
+    //!!!!!!!!!!!!! To Test, Time Limit Change 100
+    public float TimeLimit = 100f;
 
     // Check the gameStatus
     // 0 = Main
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+
         // When Game Status is Play mode
         if (GameManager.instance.gamestatus == 1)
         {
