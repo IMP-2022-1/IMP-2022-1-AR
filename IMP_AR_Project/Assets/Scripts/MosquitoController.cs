@@ -29,6 +29,11 @@ public class MosquitoController : MonoBehaviour
     private bool RightLeft;
 
 
+    // To Change Mosquito's Center Of Rotation, Get ArCamera Position #Update3
+    Transform ArCameraTransform;
+    Vector3 ArCameraOriginPosition;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -37,8 +42,8 @@ public class MosquitoController : MonoBehaviour
         MosquitoMovingChoice = Random.Range(0, 4);
         MqAudioSource = GetComponent<AudioSource>();
 
-        // Change When Player Name Change!!!!!!!!!!!!!!!!!!! -> ARSessionOrigin
-        Player = GameObject.Find("AR Session Origin");
+        // Change When Player Name Change!
+        Player = GameObject.Find("Player");
 
         OriPosition = transform.position;
 
@@ -48,6 +53,11 @@ public class MosquitoController : MonoBehaviour
         RightLeft = true;
 
         Debug.Log(MosquitoMovingChoice);
+
+
+        // #Update3
+        ArCameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        ArCameraOriginPosition = ArCameraTransform.position;
     }
 
     // Update is called once per frame
@@ -60,6 +70,14 @@ public class MosquitoController : MonoBehaviour
         }
 
         transform.LookAt(Player.transform.position);
+
+
+        // #Update3
+        Vector3 CameraMoveVector = ArCameraTransform.position - ArCameraOriginPosition;
+        OriPosition += CameraMoveVector;
+        RI.CenterOfRotation += CameraMoveVector;
+        transform.position += CameraMoveVector;
+        ArCameraOriginPosition = ArCameraTransform.position;
 
     }
 

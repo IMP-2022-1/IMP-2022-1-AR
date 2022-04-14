@@ -39,6 +39,7 @@ public class Spawner : MonoBehaviour
         // if spawnEnable true -> Animation can't occur 
         // Don't Need?
 
+        /* Case1
         Vector3 MosquitoPosition;
         MosquitoPosition = Random.onUnitSphere * distance;
         if (MosquitoPosition.y < 0)
@@ -46,6 +47,14 @@ public class Spawner : MonoBehaviour
 
         // !!!!! diversification MosquitoPrefabs when difficulty UP!
         // MUST HAVE MosquitoPrefab has Prefabs
+        GameObject MosquitoObject = Instantiate(MosquitoPrefab[0], MosquitoPosition, Quaternion.identity);
+        Mosquitos.Add(MosquitoObject);
+        */
+
+        /* Case2 */
+        Transform ARCameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        Vector3 MosquitoTempPosition = Random.insideUnitCircle.normalized;
+        Vector3 MosquitoPosition = ARCameraTransform.position + new Vector3(MosquitoTempPosition.x, Random.Range(-0.2f,0.2f), MosquitoTempPosition.y);
         GameObject MosquitoObject = Instantiate(MosquitoPrefab[0], MosquitoPosition, Quaternion.identity);
         Mosquitos.Add(MosquitoObject);
 
