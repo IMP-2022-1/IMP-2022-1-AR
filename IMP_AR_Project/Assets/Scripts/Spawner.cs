@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
     public GameObject[] MosquitoPrefab;
 
     // Having Created Mosquitos's GameObject
-    public List<GameObject> Mosquitos;
+    public List<GameObject> Mosquitos = new List<GameObject>();
 
     // Deside we need mosquito
     private bool spawnEnable;
@@ -20,30 +20,18 @@ public class Spawner : MonoBehaviour
     void Start()
     {
         // Set spawnEnable to false as defalut vaule
-        spawnEnable = false;
+        spawnEnable = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Mosquitos[0] == null)
-        {
-            Debug.Log("We have no mosquito");
-            spawnEnable = true;
-        }
-        else
-        {
-            spawnEnable = false;
-        }
-
         // If spawndEnable is true, call spawnMosquito()
-        if (spawnEnable){
+        if (spawnEnable)
+        {
             spawnMosquito();
         }
         destroyMosquito();
-
-
-
     }
 
     public void spawnMosquito()
@@ -52,6 +40,7 @@ public class Spawner : MonoBehaviour
         // Don't Need?
         int randomNum = Random.Range(0, 4);
 
+        /* Case1
         Vector3 MosquitoPosition;
         MosquitoPosition = Random.onUnitSphere * distance;
         if (MosquitoPosition.y < 0)
@@ -60,6 +49,14 @@ public class Spawner : MonoBehaviour
         // !!!!! diversification MosquitoPrefabs when difficulty UP!
         // MUST HAVE MosquitoPrefab has Prefabs
         GameObject MosquitoObject = Instantiate(MosquitoPrefab[randomNum], MosquitoPosition, Quaternion.identity);
+        Mosquitos.Add(MosquitoObject);
+        */
+
+        /* Case2 */
+        Transform ARCameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        Vector3 MosquitoTempPosition = Random.insideUnitCircle.normalized;
+        Vector3 MosquitoPosition = ARCameraTransform.position + new Vector3(MosquitoTempPosition.x, Random.Range(-0.2f,0.2f), MosquitoTempPosition.y);
+        GameObject MosquitoObject = Instantiate(MosquitoPrefab[0], MosquitoPosition, Quaternion.identity);
         Mosquitos.Add(MosquitoObject);
 
         spawnEnable = false;
@@ -71,10 +68,25 @@ public class Spawner : MonoBehaviour
     public void destroyMosquito()
     {
         // if TimeLimit == 0, destroy Mosquito
-        if(GameManager.instance.TimeLimit == 0)
+        //!!!!!!!! -> Please Check!!!!!!!!!
+        if (GameManager.instance.TimeLimit <= 0)
         {
+            Mosquitos[0].GetComponent<MosquitoController>().MosquitoAttack(); // ;;;; This is veryveryvery not clean;;;
             Destroy(Mosquitos[0]);
+
+            spawnEnable = true;
         }
-        
+
+    }
+
+    public void playerDestroyMosquito()
+    {
+        Mosquitos.Remove(Mosquitos[0]);
+
+        spawnEnable = true;
+
+        // Player -> Mosquito Destroy, Spawner -> Mosquito Destroy : Clear? Intergrated?
+
     }
 }
+
