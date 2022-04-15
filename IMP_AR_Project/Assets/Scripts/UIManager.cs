@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    // About UI
     public GameObject mainScreen;
     public GameObject playScreen;
     public GameObject HPBlood;
     public CanvasGroup Main_Cover;
     public CanvasGroup BeginInside_Cover;
     public CanvasGroup Begin_Cover;
-    private int HP;
+    private int HP; // Player HP replica
     private GameObject life;
     private RectTransform lifeRect;
     List<GameObject> lifeList = new List<GameObject>();
@@ -21,6 +22,10 @@ public class UIManager : MonoBehaviour
         mainScreen.gameObject.SetActive(false);
         playScreen.gameObject.SetActive(true);
         GameManager.instance.gamestatus = 1;
+
+        // To Touch & If GamePlay, Mosquito Spawn
+        GameObject.Find("Spawner").GetComponent<Spawner>().spawnMosquito();
+        //GameObject.Find("UI").GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
     //Quit Button
@@ -37,7 +42,8 @@ public class UIManager : MonoBehaviour
     //UI about HP
     private void UI_HP()
     {
-        HP = GameObject.Find("AR Camera").GetComponent<Player>().HP;
+        // Please Comment like this code : AR Camera -> Player
+        HP = GameObject.Find("Player").GetComponent<Player>().HP;
         // Interval of image
         int interval = 20;
 
@@ -56,7 +62,7 @@ public class UIManager : MonoBehaviour
 
     private void UI_HPControl()
     {
-        HP = GameObject.Find("AR Camera").GetComponent<Player>().HP;
+        HP = GameObject.Find("Player").GetComponent<Player>().HP;
 
         // if HP is changed by Mosquitos
         lifeList[HP].SetActive(false);
