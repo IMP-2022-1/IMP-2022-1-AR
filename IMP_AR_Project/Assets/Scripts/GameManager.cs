@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour
      * 0 = Main
      * 1 = When GamePlay Start
      * 2 = Playing (Play Checked)
-     * 3 = Game Over */
+     * 3 = Game Over 
+     * 4 = Player was Damaged */
     public int gamestatus = 0;
     Spawner spawner;
 
@@ -69,6 +70,8 @@ public class GameManager : MonoBehaviour
         {
             spawner.Mosquitos[i].GetComponent<MosquitoController>().MosquitoAttack();
         }
+
+        GameManager.instance.gamestatus = 4;
 
         // if Player were dead
         if (Player.HP <= 0)
