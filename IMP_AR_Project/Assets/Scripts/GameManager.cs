@@ -49,6 +49,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void controlSound(float vol)
+    {
+
+    }
+
     private void TimerOperation()
     {
         TimeCount += Time.deltaTime;

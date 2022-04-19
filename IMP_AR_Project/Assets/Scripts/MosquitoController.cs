@@ -8,7 +8,7 @@ public class MosquitoController : MonoBehaviour
 
     // About Mosquito
     private int MosquitoMovingChoice;
-    private AudioSource MqAudioSource;
+    public AudioSource MqAudioSource;
     public int MosquitoHP = 1;
     public int MosquitoDamage = 1;
 
@@ -26,7 +26,7 @@ public class MosquitoController : MonoBehaviour
         public Vector3 RotatingDirection;
     }
     RotatingInformation RI;
-    
+
     // Used in Moving 2
     private bool RightLeft;
 
@@ -85,7 +85,7 @@ public class MosquitoController : MonoBehaviour
          * GameObject.Find("GameManager").GetComponent<Script Name>().LifHUD();
          */
 
-            Player.GetComponent<Player>().HP -= MosquitoDamage;
+        Player.GetComponent<Player>().HP -= MosquitoDamage;
 
 
         /* Sound 
