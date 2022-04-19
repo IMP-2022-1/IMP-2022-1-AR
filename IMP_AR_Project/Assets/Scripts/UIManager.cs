@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     // About UI
     public GameObject mainScreen;
     public GameObject playScreen;
+    public GameObject tutorialScreen;
     public GameObject HPBlood;
     public CanvasGroup Main_Cover;
     public CanvasGroup BeginInside_Cover;
@@ -33,13 +34,15 @@ public class UIManager : MonoBehaviour
     // Tutorial button
     public void mainTutorial()
     {
-
+        tutorialScreen.gameObject.SetActive(true);
+        mainScreen.gameObject.SetActive(false);
     }
 
     // Tutorial button Quit
     public void mainTutorialQuit()
     {
-
+        tutorialScreen.gameObject.SetActive(false);
+        mainScreen.gameObject.SetActive(true);
     }
 
     // Quit Button
