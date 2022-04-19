@@ -7,18 +7,21 @@ using UnityEngine.XR.ARSubsystems;
 
 public class Player : MonoBehaviour
 {
+    // Player Health Point
     public int HP = 3;
 
-
+    // About RayCast
     private Vector3 touchPosition;
     bool touched;
-
+    private int MosquitoLayerMask;
     [SerializeField] 
-    public GameObject Spawner;
+    public GameObject Spawner; // When Mosquito Catching, Used
+
 
     void Start()
     { 
         touched = false;
+        MosquitoLayerMask = 1 << LayerMask.NameToLayer("Mosquito");
     }
 
 
@@ -36,24 +39,29 @@ public class Player : MonoBehaviour
 
             ray = Camera.main.ScreenPointToRay(touchPosition);
 
-            if (Physics.Raycast(ray, out hit))
+
+            // When GamePlaying & Player Touch, Raycast Occur 
+            if (GameManager.instance.gamestatus == 1 || GameManager.instance.gamestatus == 2)
             {
-
-                if (hit.collider != null && hit.collider.CompareTag("Mosquito"))
+                if (Physics.Raycast(ray, out hit, 100f, MosquitoLayerMask))
                 {
-                    Debug.Log("Heating!!");
-                    MosquitoController raycastedMosquito = hit.collider.gameObject.GetComponent<MosquitoController>();
-                    raycastedMosquito.MosquitoHP -= 1;
-                    if (raycastedMosquito.MosquitoHP <= 0)
+                    Debug.Log("Raycast Occur");
+                    if (hit.collider != null && hit.collider.CompareTag("Mosquito"))
                     {
-                        // Mosquitos[0] reduplication ? 
+                        Debug.Log("Heating!!");
+                        MosquitoController raycastedMosquito = hit.collider.gameObject.GetComponent<MosquitoController>();
+                        raycastedMosquito.MosquitoHP -= 1;
+                        if (raycastedMosquito.MosquitoHP <= 0)
+                        {
 
-                        Spawner.GetComponent<Spawner>().playerDestroyMosquito();
-                        GameManager.instance.Score++;
-                        GameManager.instance.TimeLimit = 10f;
+                            GameManager.instance.Score++;
+                            GameManager.instance.TimeLimit = 10f;
+                            GameManager.instance.TimerBar.value = 1;
 
-                        Destroy(hit.transform.gameObject);
-
+                            Spawner.GetComponent<Spawner>().playerDestroyMosquito();
+                            Destroy(hit.transform.gameObject);
+                            Spawner.GetComponent<Spawner>().spawnMosquito();
+                        }
                     }
                 }
             }

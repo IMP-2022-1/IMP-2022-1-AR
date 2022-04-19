@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    // About UI
     public GameObject mainScreen;
     public GameObject playScreen;
     public GameObject HPBlood;
     public CanvasGroup Main_Cover;
     public CanvasGroup BeginInside_Cover;
     public CanvasGroup Begin_Cover;
-    private int HP;
+    public CanvasGroup Damage_Cover;
+
+    private int HP; // Player HP replica
     private GameObject life;
     private RectTransform lifeRect;
     List<GameObject> lifeList = new List<GameObject>();
@@ -21,6 +24,10 @@ public class UIManager : MonoBehaviour
         mainScreen.gameObject.SetActive(false);
         playScreen.gameObject.SetActive(true);
         GameManager.instance.gamestatus = 1;
+
+        // To Touch & If GamePlay, Mosquito Spawn
+        GameObject.Find("Spawner").GetComponent<Spawner>().spawnMosquito();
+        //GameObject.Find("UI").GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
     //Quit Button
@@ -34,10 +41,11 @@ public class UIManager : MonoBehaviour
     }
 #endif
 
-    //UI about HP
+    //UI about HP - Instantiate
     private void UI_HP()
     {
-        HP = GameObject.Find("AR Camera").GetComponent<Player>().HP;
+        // Please Comment like this code : AR Camera -> Player
+        HP = GameObject.Find("Player").GetComponent<Player>().HP;
         // Interval of image
         int interval = 20;
 
@@ -56,10 +64,17 @@ public class UIManager : MonoBehaviour
 
     private void UI_HPControl()
     {
-        HP = GameObject.Find("AR Camera").GetComponent<Player>().HP;
+        HP = GameObject.Find("Player").GetComponent<Player>().HP;
 
         // if HP is changed by Mosquitos
         lifeList[HP].SetActive(false);
+
+        // Damage Effects
+        if (GameManager.instance.gamestatus == 4)
+        {
+            StartCoroutine(DamageFade());
+            GameManager.instance.gamestatus = 2;
+        }
     }
 
     public void Start()
@@ -67,24 +82,29 @@ public class UIManager : MonoBehaviour
         Begin_Cover.alpha = 1;
         BeginInside_Cover.alpha = 0;
         Main_Cover.alpha = 0;
+        Damage_Cover.alpha = 0;
+
+        StartCoroutine(DoFade());
     }
 
     // Show the notice before start the game
     IEnumerator DoFade()
     {
         CanvasGroup canvasGroup = BeginInside_Cover;
+        yield return new WaitForSeconds(.5f);
+
         while (canvasGroup.alpha < 1)
         {
-            canvasGroup.alpha += Time.deltaTime * 0.2f;
-            yield return new WaitForSeconds(.2f);
+            canvasGroup.alpha += Time.deltaTime * 0.75f;
+            yield return new WaitForSeconds(.0005f);
         }
         canvasGroup.interactable = false;
         yield return new WaitForSeconds(3f);
 
         while (canvasGroup.alpha > 0)
         {
-            canvasGroup.alpha -= Time.deltaTime * 0.2f;
-            yield return new WaitForSeconds(.2f);
+            canvasGroup.alpha -= Time.deltaTime * .75f;
+            yield return new WaitForSeconds(.0005f);
         }
         canvasGroup.interactable = false;
         yield return new WaitForSeconds(2f);
@@ -94,11 +114,29 @@ public class UIManager : MonoBehaviour
         CanvasGroup canvasGroup2 = Main_Cover;
         while (canvasGroup2.alpha < 1)
         {
-            canvasGroup2.alpha += Time.deltaTime * 0.4f;
-            yield return new WaitForSeconds(.2f);
+            canvasGroup2.alpha += Time.deltaTime * 2f;
+            yield return new WaitForSeconds(.0005f);
         }
 
         yield return new WaitForSeconds(3f);
+        yield return null;
+    }
+
+    IEnumerator DamageFade()
+    {
+        CanvasGroup canvasGroup = Damage_Cover;
+        while (canvasGroup.alpha < 1)
+        {
+            canvasGroup.alpha += Time.deltaTime * 20f;
+            yield return new WaitForSeconds(.005f);
+        }
+        yield return new WaitForSeconds(.01f);
+
+        while (canvasGroup.alpha > 0)
+        {
+            canvasGroup.alpha -= Time.deltaTime * 20f;
+            yield return new WaitForSeconds(.005f);
+        }
         yield return null;
     }
 
@@ -107,7 +145,7 @@ public class UIManager : MonoBehaviour
         // Start status
         if (GameManager.instance.gamestatus == 0)
         {
-            StartCoroutine(DoFade());
+            
         }
 
         // Turn the Game Mode UI on (like Awake status)
@@ -117,8 +155,8 @@ public class UIManager : MonoBehaviour
             UI_HP();
         }
 
-        // If Player still play the game
-        if (GameManager.instance.gamestatus == 2)
+        // If Player still play the game Or Player was attacked by Mosquitos
+        if (GameManager.instance.gamestatus == 2 || GameManager.instance.gamestatus == 4)
         {
             // Control HP Icon
             UI_HPControl();

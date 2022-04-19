@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1740431346769168538}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8794940875892276382}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigHub
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 7875303861373883773}
   - component: {fileID: 7875303861373883772}
   - component: {fileID: 7875303861373883746}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mosquito2
   m_TagString: Mosquito
   m_Icon: {fileID: 0}
@@ -254,7 +254,7 @@ GameObject:
   m_Component:
   - component: {fileID: 95672233992231711}
   - component: {fileID: 2803007198130688035}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mosquito Bug
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5247904629742178233}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigRArm2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -374,7 +374,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 700742886803463490}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigLArm2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -404,7 +404,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 414027900012021771}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigRArm1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -435,7 +435,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3212067231185543964}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigNeck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -466,7 +466,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1128485170194427329}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigLArm1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,7 +497,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8934946122238753005}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigTail1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -527,7 +527,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 886965994863690575}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}

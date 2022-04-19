@@ -6,16 +6,18 @@ public class MosquitoController : MonoBehaviour
 {
     public GameObject Player;
 
-    // Field of Mosquito
+    // About Mosquito
     private int MosquitoMovingChoice;
     private AudioSource MqAudioSource;
-
-    // Accoding to kind of Mosquito, HP & Damage is different 
     public int MosquitoHP = 1;
     public int MosquitoDamage = 1;
 
+
     // Used in Moving
     private Vector3 OriPosition;
+    // To Change Mosquito's Center Of Rotation, Get ArCamera Position #Update3
+    Transform ArCameraTransform;
+    Vector3 ArCameraOriginPosition;
 
     // Used in Moving 1
     public struct RotatingInformation
@@ -24,14 +26,9 @@ public class MosquitoController : MonoBehaviour
         public Vector3 RotatingDirection;
     }
     RotatingInformation RI;
-
+    
     // Used in Moving 2
     private bool RightLeft;
-
-
-    // To Change Mosquito's Center Of Rotation, Get ArCamera Position #Update3
-    Transform ArCameraTransform;
-    Vector3 ArCameraOriginPosition;
 
 
 
@@ -88,11 +85,8 @@ public class MosquitoController : MonoBehaviour
          * GameObject.Find("GameManager").GetComponent<Script Name>().LifHUD();
          */
 
-        if (GameManager.instance.TimeLimit < 0)
-        {
-            Player.GetComponent <Player> ().HP -= MosquitoDamage;
-        }
-        //GameManager.instance.Player.HP--;
+            Player.GetComponent<Player>().HP -= MosquitoDamage;
+
 
         /* Sound 
         * GetComponent<AudioSource>().Play(); - Choose Attack Sound Clip Seperately exist OR AudioSource Seperetely exist
@@ -106,12 +100,7 @@ public class MosquitoController : MonoBehaviour
         * Then Destroy Mosquito
         * I make this about Coroutine but this can be change about Animation State
         */
-        StartCoroutine("Attack");
-
-        /* Destroy
-         * Destroy(this.transform.gameObject);
-         * OR GameObject.Find("spawner").GetComponent<Script Name>().DestoryMosquito();
-        */
+        StartCoroutine("Attack"); // Maybe 1 second before TimeOver, This start
     }
 
     IEnumerator Attack()
@@ -127,11 +116,11 @@ public class MosquitoController : MonoBehaviour
 
     public void MosquitoMoving()
     {
-        if (MosquitoMovingChoice == 0)
+        if (MosquitoMovingChoice == 0) // Moving 0
         {
             transform.RotateAround(RI.CenterOfRotation, RI.RotatingDirection, Time.deltaTime * transform.localScale.magnitude * 200);
         }
-        else if (MosquitoMovingChoice == 1)
+        else if (MosquitoMovingChoice == 1) // Moving 1
         {
             if (RightLeft)
             {
@@ -148,17 +137,19 @@ public class MosquitoController : MonoBehaviour
                     RightLeft = true;
             }
         }
-        else if (MosquitoMovingChoice == 2)
+        else if (MosquitoMovingChoice == 2) // Moving 2
         {
             transform.RotateAround(Player.transform.position, Vector3.up, Time.deltaTime * transform.localScale.magnitude * 30);
         }
-        else if (MosquitoMovingChoice == 3)
+        else if (MosquitoMovingChoice == 3) // Moving 3
         {
             float MagnitudeOfScale = transform.localScale.magnitude;
             transform.RotateAround(OriPosition - transform.localScale / 3, Vector3.back, Time.deltaTime * MagnitudeOfScale * 500);
         }
     }
 
+
+    // Used in Moving 0
     public RotatingInformation DecidingCenter()
     {
         float x, y, z;

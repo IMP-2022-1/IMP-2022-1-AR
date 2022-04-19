@@ -10,29 +10,8 @@ public class Spawner : MonoBehaviour
     // Having Created Mosquitos's GameObject
     public List<GameObject> Mosquitos = new List<GameObject>();
 
-    // Deside we need mosquito
-    private bool spawnEnable;
-
     // Varialbe for dicide limition of mosquito's spawn locaiton
     public float distance = 1;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Set spawnEnable to false as defalut vaule
-        spawnEnable = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // If spawndEnable is true, call spawnMosquito()
-        if (spawnEnable)
-        {
-            spawnMosquito();
-        }
-        destroyMosquito();
-    }
 
     public void spawnMosquito()
     {
@@ -55,35 +34,27 @@ public class Spawner : MonoBehaviour
         /* Case2 */
         Transform ARCameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
         Vector3 MosquitoTempPosition = Random.insideUnitCircle.normalized;
-        Vector3 MosquitoPosition = ARCameraTransform.position + new Vector3(MosquitoTempPosition.x, Random.Range(-0.2f,0.2f), MosquitoTempPosition.y);
+        Vector3 MosquitoPosition = ARCameraTransform.position + new Vector3(MosquitoTempPosition.x, Random.Range(-0.3f,0.3f), MosquitoTempPosition.y);
         GameObject MosquitoObject = Instantiate(MosquitoPrefab[0], MosquitoPosition, Quaternion.identity);
         Mosquitos.Add(MosquitoObject);
-
-        spawnEnable = false;
     }
 
 
-    // if Mosquito many -> 1. hp check / 2. method have argument 
-    // if 2 -> Mosquitos is struct or Dictionary (struct : index check / dictionary : key check)
+    // RemoveAllMosquitos
     public void destroyMosquito()
     {
-        // if TimeLimit == 0, destroy Mosquito
-        //!!!!!!!! -> Please Check!!!!!!!!!
-        if (GameManager.instance.TimeLimit <= 0)
+        for (int i = Mosquitos.Count - 1; i >= 0; i--)
         {
-            Mosquitos[0].GetComponent<MosquitoController>().MosquitoAttack(); // ;;;; This is veryveryvery not clean;;;
-            Destroy(Mosquitos[0]);
-
-            spawnEnable = true;
+            Destroy(Mosquitos[i]);
+            Mosquitos.Remove(Mosquitos[i]);
         }
-
     }
 
+
+    // Player Touch -> Destroy Mosquito
     public void playerDestroyMosquito()
     {
         Mosquitos.Remove(Mosquitos[0]);
-
-        spawnEnable = true;
 
         // Player -> Mosquito Destroy, Spawner -> Mosquito Destroy : Clear? Intergrated?
 
