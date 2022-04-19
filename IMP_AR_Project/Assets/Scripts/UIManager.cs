@@ -30,7 +30,19 @@ public class UIManager : MonoBehaviour
         //GameObject.Find("UI").GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
-    //Quit Button
+    // Tutorial button
+    public void mainTutorial()
+    {
+
+    }
+
+    // Tutorial button Quit
+    public void mainTutorialQuit()
+    {
+
+    }
+
+    // Quit Button
     public void mainQuit()
     {
 #if UNITY_EDITOR
@@ -145,7 +157,7 @@ public class UIManager : MonoBehaviour
         // Start status
         if (GameManager.instance.gamestatus == 0)
         {
-            
+
         }
 
         // Turn the Game Mode UI on (like Awake status)
