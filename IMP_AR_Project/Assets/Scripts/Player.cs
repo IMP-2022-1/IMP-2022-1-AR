@@ -12,8 +12,8 @@ public class Player : MonoBehaviour
     public int HP = 3;
 
     // About RayCast
-    private Vector3 touchPosition;
-    bool touched;
+    // private Vector3 touchPosition;
+    // bool touched;
     private int MosquitoLayerMask;
     [SerializeField] 
     public GameObject Spawner; // When Mosquito Catching, Used
@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
 
     void Start()
     { 
-        touched = false;
+        // touched = false;
         MosquitoLayerMask = 1 << LayerMask.NameToLayer("Mosquito");
 
     }
@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(SprayRadius);
+        // Debug.Log(SprayRadius);
 
         if (isPressed)
         {
@@ -111,7 +111,6 @@ public class Player : MonoBehaviour
 
     public void Spray()
     {
-        Ray ray;
         RaycastHit hit;
 
         if (GameManager.instance.gamestatus == 1 || GameManager.instance.gamestatus == 2)
@@ -120,13 +119,13 @@ public class Player : MonoBehaviour
             if (Physics.SphereCast(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z) , SprayRadius, transform.forward, out hit, 10f, MosquitoLayerMask))
             {
                 Debug.Log("Raycast Occur");
-                Debug.DrawRay(Camera.main.transform.position, transform.forward * 10f, Color.blue, 1f);
+                // Debug.DrawRay(Camera.main.transform.position, transform.forward * 10f, Color.blue, 1f);
 
                 if (hit.collider != null && hit.collider.CompareTag("Mosquito"))
                 {
                     Debug.Log("Heating!!");
                     MosquitoController raycastedMosquito = hit.collider.gameObject.GetComponent<MosquitoController>();
-                    raycastedMosquito.MosquitoHP -= 1;
+                    raycastedMosquito.MosquitoHP -= 6 * Time.deltaTime;
                     if (raycastedMosquito.MosquitoHP <= 0)
                     {
 
@@ -153,7 +152,7 @@ public class Player : MonoBehaviour
 
     public void ButtonUp()
     {
-        Debug.Log("Button not pressed");
+        // Debug.Log("Button not pressed");
         isPressed = false;
     }
 }

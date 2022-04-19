@@ -9,7 +9,7 @@ public class MosquitoController : MonoBehaviour
     // About Mosquito
     protected int MosquitoMovingChoice;
     protected AudioSource MqAudioSource;
-    public int MosquitoHP = 1;
+    public float MosquitoHP = 1;
     public int MosquitoDamage = 1;
 
 
