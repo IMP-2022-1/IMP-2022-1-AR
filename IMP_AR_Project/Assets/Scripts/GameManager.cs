@@ -63,10 +63,10 @@ public class GameManager : MonoBehaviour
             TimeOver();
     }
 
-    private void TimeOver ()
-    { 
+    private void TimeOver()
+    {
         // Mosquitos Attack
-        for(int i = spawner.Mosquitos.Count - 1; i >= 0; i--)
+        for (int i = spawner.Mosquitos.Count - 1; i >= 0; i--)
         {
             spawner.Mosquitos[i].GetComponent<MosquitoController>().MosquitoAttack();
         }
@@ -76,11 +76,9 @@ public class GameManager : MonoBehaviour
         // if Player were dead
         if (Player.HP <= 0)
         {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-                Application.Quit();
-#endif
+            GameManager.instance.gamestatus = 3;
+            spawner.destroyMosquito();
+
         }
 
         // Time Recover

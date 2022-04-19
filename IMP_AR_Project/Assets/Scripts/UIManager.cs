@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
     public GameObject mainScreen;
     public GameObject playScreen;
     public GameObject tutorialScreen;
+    public GameObject optionScreen;
+    public GameObject gameoverScreen;
     public GameObject HPBlood;
     public CanvasGroup Main_Cover;
     public CanvasGroup BeginInside_Cover;
@@ -38,12 +40,24 @@ public class UIManager : MonoBehaviour
         mainScreen.gameObject.SetActive(false);
     }
 
-    // Tutorial button Quit
-    public void mainTutorialQuit()
+    // Option button
+    public void mainOption()
+    {
+        optionScreen.gameObject.SetActive(true);
+        mainScreen.gameObject.SetActive(false);
+    }
+
+    // Go to Main Screen Quit
+    public void mainHome()
     {
         tutorialScreen.gameObject.SetActive(false);
+        optionScreen.gameObject.SetActive(false);
+        gameoverScreen.gameObject.SetActive(false);
         mainScreen.gameObject.SetActive(true);
+        GameManager.instance.gamestatus = 0;
     }
+
+
 
     // Quit Button
     public void mainQuit()
@@ -137,6 +151,7 @@ public class UIManager : MonoBehaviour
         yield return null;
     }
 
+    // When Player damaged, show the effect.
     IEnumerator DamageFade()
     {
         CanvasGroup canvasGroup = Damage_Cover;
@@ -181,7 +196,9 @@ public class UIManager : MonoBehaviour
         if (GameManager.instance.gamestatus == 3)
         {
             // show the Game over
-            GameManager.instance.GameOver.gameObject.SetActive(true);
+            gameoverScreen.gameObject.SetActive(true);
+            playScreen.gameObject.SetActive(false);
+            GameObject.Find("Spawner").GetComponent<Spawner>().destroyMosquito();
         }
     }
 }
