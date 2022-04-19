@@ -38,6 +38,15 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        // Game Start (Main Menu)
+        if (GameManager.instance.gamestatus == 0)
+        {
+            // setting initial variable
+            Score = 0;
+            TimeCount = 0;
+            Player.HP = 3;
+        }
+
         // When Game Status is Playing mode
         if (GameManager.instance.gamestatus == 2)
         {
