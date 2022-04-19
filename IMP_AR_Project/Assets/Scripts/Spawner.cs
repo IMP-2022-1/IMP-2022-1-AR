@@ -34,7 +34,16 @@ public class Spawner : MonoBehaviour
         Transform ARCameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
         Vector3 MosquitoTempPosition = Random.insideUnitCircle.normalized;
         Vector3 MosquitoPosition = ARCameraTransform.position + new Vector3(MosquitoTempPosition.x, Random.Range(-0.3f,0.3f), MosquitoTempPosition.y);
-        GameObject MosquitoObject = Instantiate(MosquitoPrefab[0], MosquitoPosition, Quaternion.identity);
+        GameObject MosquitoObject;
+        if (GameManager.instance.Score < 6)
+            MosquitoObject = Instantiate(MosquitoPrefab[0], MosquitoPosition, Quaternion.identity);
+        else if (GameManager.instance.Score < 11)
+        {
+            MosquitoObject = Instantiate(MosquitoPrefab[Random.Range(0, (int) MosquitoPrefab.Length / 2)], MosquitoPosition, Quaternion.identity);
+        } else
+        {
+            MosquitoObject = Instantiate(MosquitoPrefab[Random.Range((int) MosquitoPrefab.Length/2, MosquitoPrefab.Length)], MosquitoPosition, Quaternion.identity);
+        }
         Mosquitos.Add(MosquitoObject);
     }
 
