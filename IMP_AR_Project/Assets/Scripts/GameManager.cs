@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public Text Timer;
     public Text ScoreCount;
     public Slider TimerBar;
+    public Slider PlayerSprayGauge;
 
 
 
@@ -44,6 +45,8 @@ public class GameManager : MonoBehaviour
 
             // Score
             ScoreCount.text = Score.ToString() + " Kills";
+
+            PlayerSprayGauge.value = Player.SprayGauge;
         }
     }
 
