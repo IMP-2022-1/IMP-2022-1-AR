@@ -198,7 +198,14 @@ public class UIManager : MonoBehaviour
             // show the Game over
             gameoverScreen.gameObject.SetActive(true);
             playScreen.gameObject.SetActive(false);
+
+            // Pause Spawner
             GameObject.Find("Spawner").GetComponent<Spawner>().destroyMosquito();
+
+            // Show the Result
+            GameManager.instance.resultScore.text = GameManager.instance.Score.ToString() + " Kills";
+            float minute = GameManager.instance.TimeCount / 60.0f - 1;
+            GameManager.instance.resultTime.text = minute.ToString("F0") + ":" + GameManager.instance.TimeCount.ToString("F0");
         }
     }
 }

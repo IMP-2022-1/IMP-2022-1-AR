@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     // About GamePlay
     public Player Player;
     public int Score = 0;
+    public float TimeCount = 0f;
     public float TimeLimit = 10f;
     /* Check the gameStatus
      * 0 = Main
@@ -21,7 +22,8 @@ public class GameManager : MonoBehaviour
     Spawner spawner;
 
     // About UI
-    public GameObject GameOver;
+    public Text resultScore;
+    public Text resultTime;
     public Text Timer;
     public Text ScoreCount;
     public Slider TimerBar;
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour
 
     private void TimerOperation()
     {
+        TimeCount += Time.deltaTime;
         TimeLimit -= Time.deltaTime;
         Timer.text = TimeLimit.ToString("F1");
         TimerBar.value -= Time.deltaTime / 10.0f;
