@@ -74,7 +74,7 @@ public class UIManager : MonoBehaviour
     private void UI_HP()
     {
         // Please Comment like this code : AR Camera -> Player
-        HP = GameObject.Find("Player").GetComponent<Player>().HP;
+        HP = GameManager.instance.Player.HP;
         // Interval of image
         int interval = 20;
 
@@ -91,9 +91,21 @@ public class UIManager : MonoBehaviour
         GameManager.instance.gamestatus = 2;
     }
 
+    // UI HP Reset
+    private void UI_HPReset()
+    {
+        GameObject HPs = GameObject.FindGameObjectWithTag("HPBlood");
+        for (int i = lifeList.Count - 1; i >= 0; i--)
+        {
+            Destroy(lifeList[i]);
+            lifeList.Remove(lifeList[i]);
+        }
+
+    }
+
     private void UI_HPControl()
     {
-        HP = GameObject.Find("Player").GetComponent<Player>().HP;
+        HP = GameManager.instance.Player.HP;
 
         // if HP is changed by Mosquitos
         lifeList[HP].SetActive(false);
@@ -195,6 +207,9 @@ public class UIManager : MonoBehaviour
         // Game Over!
         if (GameManager.instance.gamestatus == 3)
         {
+            // HP UI Reset
+            UI_HPReset();
+
             // show the Game over
             gameoverScreen.gameObject.SetActive(true);
             playScreen.gameObject.SetActive(false);
