@@ -7,6 +7,8 @@ using UnityEngine.XR.ARSubsystems;
 
 public class Player : MonoBehaviour
 {
+    public static Player instance;  // Use Singleton Pattern
+
     // Player Health Point
     public int HP = 3;
 
@@ -17,11 +19,11 @@ public class Player : MonoBehaviour
     [SerializeField] 
     public GameObject Spawner; // When Mosquito Catching, Used
 
-
     void Start()
     { 
         touched = false;
         MosquitoLayerMask = 1 << LayerMask.NameToLayer("Mosquito");
+        
     }
 
 
@@ -48,12 +50,11 @@ public class Player : MonoBehaviour
                     Debug.Log("Raycast Occur");
                     if (hit.collider != null && hit.collider.CompareTag("Mosquito"))
                     {
-                        Debug.Log("Heating!!");
+                        Debug.Log("Hitting Mousquito!!");
                         MosquitoController raycastedMosquito = hit.collider.gameObject.GetComponent<MosquitoController>();
                         raycastedMosquito.MosquitoHP -= 1;
                         if (raycastedMosquito.MosquitoHP <= 0)
-                        {
-
+                        {                           
                             GameManager.instance.Score++;
                             GameManager.instance.TimeLimit = 10f;
                             GameManager.instance.TimerBar.value = 1;
@@ -61,7 +62,19 @@ public class Player : MonoBehaviour
                             Spawner.GetComponent<Spawner>().playerDestroyMosquito();
                             Destroy(hit.transform.gameObject);
                             Spawner.GetComponent<Spawner>().spawnMosquito();
+                            Debug.Log("HP After Hitting Mosquito  : " + HP);
                         }
+                    }
+                    else if(hit.collider != null && hit.collider.CompareTag("Potion"))
+                    {
+                        Debug.Log("Heating Potion!!");
+                        if(HP < 3)
+                        {
+                            Debug.Log("HP Before Eating Potion : " + HP);
+                            HP = HP +1;
+                            Debug.Log("HP After Eating Potion : " + HP);
+                        }
+                        Destroy(hit.collider.gameObject);
                     }
                 }
             }

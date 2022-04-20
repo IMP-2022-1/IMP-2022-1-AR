@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -261,6 +261,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8405911325854400904, guid: 5f5c1977328230e4d9dfa2d64f7cb3a7, type: 3}
   m_PrefabInstance: {fileID: 2044862902}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &223974227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223974226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 208b0b7cb678d3749a12bc1a4847a95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MosquitoPrefab:
+  - {fileID: 3230615438166922061, guid: 775f18dd9a10b944bb6179e09414bc9f, type: 3}
+  Mosquitos: []
+  distance: 1
 --- !u!1 &230440259
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,6 +1238,39 @@ Transform:
   m_Father: {fileID: 538383650}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1114040580 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4897938779828929389, guid: 6277caa8bb826e3438631b8a27d1de57, type: 3}
+  m_PrefabInstance: {fileID: 1160726213}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1114040584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114040580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PlanePrefab: {fileID: 9047063037266260969, guid: 2973fbc6696f8d04793587b158421056, type: 3}
+  m_DetectionMode: 1
+--- !u!114 &1114040585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114040580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7a8bbfa9c4f474d82c33d37bf29ed8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unrealPotionToInstantiate: {fileID: 3470693168300049708, guid: ec71ec93efe388c4b9278670123fa944, type: 3}
+  realPotionToInstantiate: {fileID: 1817385263134168916, guid: 94c0da8d5f223aa4cbd16b8bd7df1fea, type: 3}
 --- !u!1 &1146847986
 GameObject:
   m_ObjectHideFlags: 0
@@ -2614,7 +2663,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8405911325854400905, guid: 5f5c1977328230e4d9dfa2d64f7cb3a7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5f5c1977328230e4d9dfa2d64f7cb3a7, type: 3}
 --- !u!225 &2049672638 stripped
 CanvasGroup:
