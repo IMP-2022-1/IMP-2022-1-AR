@@ -125,10 +125,16 @@ public class Player : MonoBehaviour
                 {
                     Debug.Log("Heating!!");
                     MosquitoController raycastedMosquito = hit.collider.gameObject.GetComponent<MosquitoController>();
-                    raycastedMosquito.MosquitoHP -= 6 * Time.deltaTime;
+                    raycastedMosquito.MosquitoHP -= 5 * Time.deltaTime;
+
+                    // Sparying Sound Start
+                    GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().SprayingStart();
+
                     raycastedMosquito.MosquitoHeated();
                     if (raycastedMosquito.MosquitoHP <= 0)
                     {
+                        // KilledMosquito Sound Start
+                        GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().KilledMosquitoStart();
 
                         GameManager.instance.Score++;
                         GameManager.instance.TimeLimit = 10f;

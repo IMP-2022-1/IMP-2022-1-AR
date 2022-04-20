@@ -111,6 +111,8 @@ public class GameManager : MonoBehaviour
             GameManager.instance.gamestatus = 3;
             spawner.destroyMosquito();
 
+            // GameOverMusic Start
+            GameObject.Find("Music").GetComponent<MusicController>().GameOverMusicStart();
         }
 
         // Time Recover

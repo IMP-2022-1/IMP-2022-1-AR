@@ -129,6 +129,8 @@ public class MosquitoController : MonoBehaviour
             Player.GetComponent<Player>().HP -= MosquitoDamage;
 
             Handheld.Vibrate();
+            // Attacked Sound Start
+            GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().AttackedStart();
 
         /* Attack
         * To Destroy Mosquito When Animator over
@@ -160,7 +162,14 @@ public class MosquitoController : MonoBehaviour
         int Damaged = Animator.StringToHash("Damaged");
         animator.SetBool(Damaged, true);
 
-        yield return new WaitForSeconds(0.1f);
+        AudioClip Temp = MqAudioSource.clip;
+        MqAudioSource.clip = GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().MosquitoHeated;
+        MqAudioSource.Play();
+
+        yield return new WaitForSeconds(0.2f);
+
+        MqAudioSource.clip = Temp;
+        MqAudioSource.Play();
 
         animator.SetBool(Damaged, false);
         HeatedAnimationStart = true;

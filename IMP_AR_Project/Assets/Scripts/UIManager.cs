@@ -30,7 +30,8 @@ public class UIManager : MonoBehaviour
 
         // To Touch & If GamePlay, Mosquito Spawn
         GameObject.Find("Spawner").GetComponent<Spawner>().spawnMosquito();
-        //GameObject.Find("UI").GetComponent<CanvasGroup>().blocksRaycasts = false;
+        // Music -> Play Sound Start
+        GameObject.Find("Music").GetComponent<MusicController>().PlaySoundStart();
     }
 
     // Tutorial button
@@ -187,7 +188,9 @@ public class UIManager : MonoBehaviour
         // Start status
         if (GameManager.instance.gamestatus == 0)
         {
-
+            // Main Music Start
+            if (Begin_Cover.alpha == 0)
+                GameObject.Find("Music").GetComponent<MusicController>().MainMusicStart();
         }
 
         // Turn the Game Mode UI on (like Awake status)
