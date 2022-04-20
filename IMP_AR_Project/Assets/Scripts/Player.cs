@@ -112,7 +112,7 @@ public class Player : MonoBehaviour
     public void Spray()
     {
         RaycastHit hit;
-
+        
         if (GameManager.instance.gamestatus == 1 || GameManager.instance.gamestatus == 2)
         {
 
@@ -126,6 +126,7 @@ public class Player : MonoBehaviour
                     Debug.Log("Heating!!");
                     MosquitoController raycastedMosquito = hit.collider.gameObject.GetComponent<MosquitoController>();
                     raycastedMosquito.MosquitoHP -= 6 * Time.deltaTime;
+                    raycastedMosquito.MosquitoHeated();
                     if (raycastedMosquito.MosquitoHP <= 0)
                     {
 

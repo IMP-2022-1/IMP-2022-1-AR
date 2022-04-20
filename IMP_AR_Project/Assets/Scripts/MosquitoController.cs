@@ -8,10 +8,12 @@ public class MosquitoController : MonoBehaviour
 
     // About Mosquito
     protected int MosquitoMovingChoice;
-    protected AudioSource MqAudioSource;
+    public AudioSource MqAudioSource;
     public float MosquitoHP = 1;
     public int MosquitoDamage = 1;
 
+    // Used in Heated
+    public bool HeatedAnimationStart = true;
 
     // Used in Moving
     protected Vector3 OriPosition;
@@ -108,7 +110,7 @@ public class MosquitoController : MonoBehaviour
         int Attack = Animator.StringToHash("Attack");
         animator.SetBool(Attack, true);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
 
         /* If it have Sound 
          * GetComponent<AudioSource>().Play(); - Choose Attack Sound Clip Seperately exist OR AudioSource Seperetely exist
@@ -126,6 +128,8 @@ public class MosquitoController : MonoBehaviour
 
             Player.GetComponent<Player>().HP -= MosquitoDamage;
 
+            Handheld.Vibrate();
+
         /* Attack
         * To Destroy Mosquito When Animator over
         * When attack occur Mosquito invincibility until attack animation over
@@ -141,9 +145,12 @@ public class MosquitoController : MonoBehaviour
         // In 'Player' Script, After the Debug.Log("Heating") - MosquitoController create,
         // raycastedMosquito.MosquitoHeated()
         // But, If Mosquito is lot, all animation change?? (Guess)
-        Handheld.Vibrate();
-        MqAudioSource.Play(); // Change Other Sound Clip And Play & ReChange Original Sound
-        StartCoroutine("Heated"); // Q. When Other Animation occur, Animation transitions have delay
+        // Change Other Sound Clip And Play & ReChange Original Sound ??
+        if (HeatedAnimationStart)
+        {
+            StartCoroutine("Heated");
+            HeatedAnimationStart = false; // Q. When Other Animation occur, Animation transitions have delay -> About duration. Solved! 
+        }
     }
 
     IEnumerator Heated()
@@ -153,9 +160,10 @@ public class MosquitoController : MonoBehaviour
         int Damaged = Animator.StringToHash("Damaged");
         animator.SetBool(Damaged, true);
 
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.1f);
 
         animator.SetBool(Damaged, false);
+        HeatedAnimationStart = true;
     }
 
     // Moving

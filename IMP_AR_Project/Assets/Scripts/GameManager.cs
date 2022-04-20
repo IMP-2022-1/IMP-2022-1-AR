@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     public int gamestatus = 0;
     Spawner spawner;
 
+    public bool RTA = true; 
+
     // About UI
     public Text resultScore;
     public Text resultTime;
@@ -78,6 +80,14 @@ public class GameManager : MonoBehaviour
         else
             TimerBar.transform.Find("Fill Area").gameObject.SetActive(true);
 
+        if (TimeLimit <= 0.4f && RTA == true ) {
+            for (int i = spawner.Mosquitos.Count - 1; i >= 0; i--)
+            {
+                spawner.Mosquitos[i].GetComponent<MosquitoController>().ReadyToAttack();
+            }
+            RTA = false;
+        }
+
         // When TimeOver
         if (TimeLimit <= 0)
             TimeOver();
@@ -90,6 +100,8 @@ public class GameManager : MonoBehaviour
         {
             spawner.Mosquitos[i].GetComponent<MosquitoController>().MosquitoAttack();
         }
+
+        RTA = true;
 
         GameManager.instance.gamestatus = 4;
 
