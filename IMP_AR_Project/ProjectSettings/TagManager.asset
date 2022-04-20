@@ -8,6 +8,7 @@ TagManager:
   - MainUI
   - PlayUI
   - sliderSound
+  - HPBlood
   layers:
   - Default
   - TransparentFX
