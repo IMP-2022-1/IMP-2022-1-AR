@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     // About GamePlay
     public Player Player;
     public int Score = 0;
+    public float TimeCount = 0f;
     public float TimeLimit = 10f;
     /* Check the gameStatus
      * 0 = Main
@@ -21,7 +22,8 @@ public class GameManager : MonoBehaviour
     Spawner spawner;
 
     // About UI
-    public GameObject GameOver;
+    public Text resultScore;
+    public Text resultTime;
     public Text Timer;
     public Text ScoreCount;
     public Slider TimerBar;
@@ -37,6 +39,15 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        // Game Start (Main Menu)
+        if (GameManager.instance.gamestatus == 0)
+        {
+            // setting initial variable
+            Score = 0;
+            TimeCount = 0;
+            Player.HP = 3;
+        }
+
         // When Game Status is Playing mode
         if (GameManager.instance.gamestatus == 2)
         {
@@ -50,8 +61,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void controlSound(float vol)
+    {
+
+    }
+
     private void TimerOperation()
     {
+        TimeCount += Time.deltaTime;
         TimeLimit -= Time.deltaTime;
         Timer.text = TimeLimit.ToString("F1");
         TimerBar.value -= Time.deltaTime / 10.0f;
@@ -66,10 +83,10 @@ public class GameManager : MonoBehaviour
             TimeOver();
     }
 
-    private void TimeOver ()
-    { 
+    private void TimeOver()
+    {
         // Mosquitos Attack
-        for(int i = spawner.Mosquitos.Count - 1; i >= 0; i--)
+        for (int i = spawner.Mosquitos.Count - 1; i >= 0; i--)
         {
             spawner.Mosquitos[i].GetComponent<MosquitoController>().MosquitoAttack();
         }
@@ -79,11 +96,9 @@ public class GameManager : MonoBehaviour
         // if Player were dead
         if (Player.HP <= 0)
         {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-                Application.Quit();
-#endif
+            GameManager.instance.gamestatus = 3;
+            spawner.destroyMosquito();
+
         }
 
         // Time Recover

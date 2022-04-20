@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6731132406090732702}
   m_Layer: 5
   m_Name: HPBlood
-  m_TagString: Untagged
+  m_TagString: HPBlood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

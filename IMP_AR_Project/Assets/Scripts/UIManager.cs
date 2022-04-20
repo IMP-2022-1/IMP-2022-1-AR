@@ -7,6 +7,9 @@ public class UIManager : MonoBehaviour
     // About UI
     public GameObject mainScreen;
     public GameObject playScreen;
+    public GameObject tutorialScreen;
+    public GameObject optionScreen;
+    public GameObject gameoverScreen;
     public GameObject HPBlood;
     public CanvasGroup Main_Cover;
     public CanvasGroup BeginInside_Cover;
@@ -30,7 +33,33 @@ public class UIManager : MonoBehaviour
         //GameObject.Find("UI").GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
-    //Quit Button
+    // Tutorial button
+    public void mainTutorial()
+    {
+        tutorialScreen.gameObject.SetActive(true);
+        mainScreen.gameObject.SetActive(false);
+    }
+
+    // Option button
+    public void mainOption()
+    {
+        optionScreen.gameObject.SetActive(true);
+        mainScreen.gameObject.SetActive(false);
+    }
+
+    // Go to Main Screen Quit
+    public void mainHome()
+    {
+        tutorialScreen.gameObject.SetActive(false);
+        optionScreen.gameObject.SetActive(false);
+        gameoverScreen.gameObject.SetActive(false);
+        mainScreen.gameObject.SetActive(true);
+        GameManager.instance.gamestatus = 0;
+    }
+
+
+
+    // Quit Button
     public void mainQuit()
     {
 #if UNITY_EDITOR
@@ -45,7 +74,7 @@ public class UIManager : MonoBehaviour
     private void UI_HP()
     {
         // Please Comment like this code : AR Camera -> Player
-        HP = GameObject.Find("Player").GetComponent<Player>().HP;
+        HP = GameManager.instance.Player.HP;
         // Interval of image
         int interval = 20;
 
@@ -62,9 +91,21 @@ public class UIManager : MonoBehaviour
         GameManager.instance.gamestatus = 2;
     }
 
+    // UI HP Reset
+    private void UI_HPReset()
+    {
+        GameObject HPs = GameObject.FindGameObjectWithTag("HPBlood");
+        for (int i = lifeList.Count - 1; i >= 0; i--)
+        {
+            Destroy(lifeList[i]);
+            lifeList.Remove(lifeList[i]);
+        }
+
+    }
+
     private void UI_HPControl()
     {
-        HP = GameObject.Find("Player").GetComponent<Player>().HP;
+        HP = GameManager.instance.Player.HP;
 
         // if HP is changed by Mosquitos
         lifeList[HP].SetActive(false);
@@ -122,6 +163,7 @@ public class UIManager : MonoBehaviour
         yield return null;
     }
 
+    // When Player damaged, show the effect.
     IEnumerator DamageFade()
     {
         CanvasGroup canvasGroup = Damage_Cover;
@@ -145,7 +187,7 @@ public class UIManager : MonoBehaviour
         // Start status
         if (GameManager.instance.gamestatus == 0)
         {
-            
+
         }
 
         // Turn the Game Mode UI on (like Awake status)
@@ -165,8 +207,20 @@ public class UIManager : MonoBehaviour
         // Game Over!
         if (GameManager.instance.gamestatus == 3)
         {
+            // HP UI Reset
+            UI_HPReset();
+
             // show the Game over
-            GameManager.instance.GameOver.gameObject.SetActive(true);
+            gameoverScreen.gameObject.SetActive(true);
+            playScreen.gameObject.SetActive(false);
+
+            // Pause Spawner
+            GameObject.Find("Spawner").GetComponent<Spawner>().destroyMosquito();
+
+            // Show the Result
+            GameManager.instance.resultScore.text = GameManager.instance.Score.ToString() + " Kills";
+            float minute = GameManager.instance.TimeCount / 60.0f - 1;
+            GameManager.instance.resultTime.text = minute.ToString("F0") + ":" + GameManager.instance.TimeCount.ToString("F0");
         }
     }
 }
