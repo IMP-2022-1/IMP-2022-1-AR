@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     [SerializeField] 
     public GameObject Spawner; // When Mosquito Catching, Used
 
+    [SerializeField] private GameObject Smoke;
+
     [SerializeField] private Button sprayButton;
 
     private bool isPressed = false;
@@ -42,12 +44,18 @@ public class Player : MonoBehaviour
 
         if (isPressed)
         {
+            Smoke.SetActive(true);
             SprayGauge -= Time.deltaTime;
 
             if(SprayGauge <= 0)
             {
+                Smoke.SetActive(false);
                 isPressed = false;
             }
+        }
+        else
+        {
+            Smoke.SetActive(false);
         }
 
         if (!isPressed && SprayGauge <= 10f)
@@ -59,7 +67,7 @@ public class Player : MonoBehaviour
         Crosshair.transform.localScale = new Vector3(SprayRadius / 0.08f - 0.12f, SprayRadius / 0.08f - 0.12f, SprayRadius / 0.08f - 0.12f);
 
         //touched = TryGetTouchPosition(out touchPosition);
-
+        Debug.Log(Smoke.activeInHierarchy);
     }
 
     private void FixedUpdate()
