@@ -7,6 +7,8 @@ TagManager:
   - Mosquito
   - MainUI
   - PlayUI
+  - sliderSound
+  - HPBlood
   layers:
   - Default
   - TransparentFX

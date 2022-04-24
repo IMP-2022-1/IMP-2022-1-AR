@@ -7,17 +7,19 @@ public class MosquitoController : MonoBehaviour
     public GameObject Player;
 
     // About Mosquito
-    private int MosquitoMovingChoice;
-    private AudioSource MqAudioSource;
-    public int MosquitoHP = 1;
+    protected int MosquitoMovingChoice;
+    public AudioSource MqAudioSource;
+    public float MosquitoHP = 1;
     public int MosquitoDamage = 1;
 
+    // Used in Heated
+    public bool HeatedAnimationStart = true;
 
     // Used in Moving
-    private Vector3 OriPosition;
+    protected Vector3 OriPosition;
     // To Change Mosquito's Center Of Rotation, Get ArCamera Position #Update3
-    Transform ArCameraTransform;
-    Vector3 ArCameraOriginPosition;
+    protected Transform ArCameraTransform;
+    protected Vector3 ArCameraOriginPosition;
 
     // Used in Moving 1
     public struct RotatingInformation
@@ -25,10 +27,10 @@ public class MosquitoController : MonoBehaviour
         public Vector3 CenterOfRotation;
         public Vector3 RotatingDirection;
     }
-    RotatingInformation RI;
+    protected RotatingInformation RI;
     
     // Used in Moving 2
-    private bool RightLeft;
+    protected bool RightLeft;
 
 
 
@@ -78,6 +80,45 @@ public class MosquitoController : MonoBehaviour
 
     }
 
+
+    // Attack
+    public void ReadyToAttack () 
+    {
+        /* In GameManager Add
+         // When, must be in field!
+         public bool 1Second = true; 
+        
+         // When, TimeOperation ()
+         if (TimeLimit <= 0.7f && 1Second == true ) {
+            for(int i = spawner.Mosquitos.Count - 1; i >= 0; i--)
+            {
+                spawner.Mosquitos[i].GetComponent<MosquitoController>().ReadyToAttack();
+             }
+            1Second = false;
+         }
+
+         // When, TimeOver ()
+         1Second = true;
+         */
+
+        StartCoroutine("Attack");
+    }
+
+    IEnumerator Attack()
+    {
+        Animator animator = GetComponent<Animator>();
+        int Attack = Animator.StringToHash("Attack");
+        animator.SetBool(Attack, true);
+
+        yield return new WaitForSeconds(0.3f);
+
+        /* If it have Sound 
+         * GetComponent<AudioSource>().Play(); - Choose Attack Sound Clip Seperately exist OR AudioSource Seperetely exist
+         * AudioSource -> List<AudioSource> ** = GetComponents<AudioSource>() and check index
+         * Clip -> this Script has sound clip and replace when attack occur
+         */
+    }
+
     public void MosquitoAttack()
     {
         /* Player HP_Down
@@ -87,12 +128,9 @@ public class MosquitoController : MonoBehaviour
 
             Player.GetComponent<Player>().HP -= MosquitoDamage;
 
-
-        /* Sound 
-        * GetComponent<AudioSource>().Play(); - Choose Attack Sound Clip Seperately exist OR AudioSource Seperetely exist
-        * AudioSource -> List<AudioSource> ** = GetComponents<AudioSource>() and check index
-        * Clip -> this Script has sound clip and replace when attack occur
-        */
+            Handheld.Vibrate();
+            // Attacked Sound Start
+            GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().AttackedStart();
 
         /* Attack
         * To Destroy Mosquito When Animator over
@@ -100,21 +138,45 @@ public class MosquitoController : MonoBehaviour
         * Then Destroy Mosquito
         * I make this about Coroutine but this can be change about Animation State
         */
-        StartCoroutine("Attack"); // Maybe 1 second before TimeOver, This start
     }
 
-    IEnumerator Attack()
+
+    // Heated - Player 
+    public void MosquitoHeated ()
     {
-        Animator animator = GetComponent<Animator>();
-        int Attack = Animator.StringToHash("Attack");
-        animator.SetBool(Attack, true);
-
-        yield return new WaitForSeconds(0.4f);
-
-        animator.SetBool(Attack, false);
+        // In 'Player' Script, After the Debug.Log("Heating") - MosquitoController create,
+        // raycastedMosquito.MosquitoHeated()
+        // But, If Mosquito is lot, all animation change?? (Guess)
+        // Change Other Sound Clip And Play & ReChange Original Sound ??
+        if (HeatedAnimationStart)
+        {
+            StartCoroutine("Heated");
+            HeatedAnimationStart = false; // Q. When Other Animation occur, Animation transitions have delay -> About duration. Solved! 
+        }
     }
 
-    public void MosquitoMoving()
+    IEnumerator Heated()
+    { 
+        // Q. Heated Mosquito's HP down Intergrated??
+        Animator animator = GetComponent<Animator>();
+        int Damaged = Animator.StringToHash("Damaged");
+        animator.SetBool(Damaged, true);
+
+        AudioClip Temp = MqAudioSource.clip;
+        MqAudioSource.clip = GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().MosquitoHeated;
+        MqAudioSource.Play();
+
+        yield return new WaitForSeconds(0.2f);
+
+        MqAudioSource.clip = Temp;
+        MqAudioSource.Play();
+
+        animator.SetBool(Damaged, false);
+        HeatedAnimationStart = true;
+    }
+
+    // Moving
+    public virtual void MosquitoMoving()
     {
         if (MosquitoMovingChoice == 0) // Moving 0
         {
