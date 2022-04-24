@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Button sprayButton;
 
+    [SerializeField] private GameObject Smoke;
+
     private bool isPressed = false;
 
     public float SprayGauge = 10.02f;
@@ -42,12 +44,18 @@ public class Player : MonoBehaviour
 
         if (isPressed)
         {
+            Smoke.SetActive(true);
             SprayGauge -= Time.deltaTime;
 
             if(SprayGauge <= 0)
             {
+                Smoke.SetActive(false);
                 isPressed = false;
             }
+        }
+        else
+        {
+            Smoke.SetActive(false);
         }
 
         if (!isPressed && SprayGauge <= 10f)
