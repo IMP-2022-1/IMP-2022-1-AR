@@ -5430,6 +5430,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawner
       objectReference: {fileID: 0}
+    - target: {fileID: 8405911325854400905, guid: 5f5c1977328230e4d9dfa2d64f7cb3a7, type: 3}
+      propertyPath: MosquitoPrefab.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405911325854400905, guid: 5f5c1977328230e4d9dfa2d64f7cb3a7, type: 3}
+      propertyPath: MosquitoPrefab.Array.data[3]
+      value: 
+      objectReference: {fileID: 895655634068375377, guid: 6da9fd8dbcbb8ab4db77f6af6fcbafc6, type: 3}
+    - target: {fileID: 8405911325854400905, guid: 5f5c1977328230e4d9dfa2d64f7cb3a7, type: 3}
+      propertyPath: MosquitoPrefab.Array.data[4]
+      value: 
+      objectReference: {fileID: 6972131709320306022, guid: 2349693e51242634180a7febbc0f9bcb, type: 3}
+    - target: {fileID: 8405911325854400905, guid: 5f5c1977328230e4d9dfa2d64f7cb3a7, type: 3}
+      propertyPath: MosquitoPrefab.Array.data[5]
+      value: 
+      objectReference: {fileID: 4017653970543658025, guid: aa749ec9c1c283640a4d9b3d060694a2, type: 3}
     - target: {fileID: 8405911325854400918, guid: 5f5c1977328230e4d9dfa2d64f7cb3a7, type: 3}
       propertyPath: m_RootOrder
       value: 5
