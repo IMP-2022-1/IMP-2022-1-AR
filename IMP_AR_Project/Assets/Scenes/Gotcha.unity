@@ -1269,8 +1269,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7a8bbfa9c4f474d82c33d37bf29ed8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unrealPotionToInstantiate: {fileID: 3470693168300049708, guid: ec71ec93efe388c4b9278670123fa944, type: 3}
-  realPotionToInstantiate: {fileID: 1817385263134168916, guid: 94c0da8d5f223aa4cbd16b8bd7df1fea, type: 3}
+  unrealPotionToInstantiate: {fileID: 264234348886231456, guid: ec71ec93efe388c4b9278670123fa944, type: 3}
+  realPotionToInstantiate: {fileID: 814054604064794777, guid: 94c0da8d5f223aa4cbd16b8bd7df1fea, type: 3}
+  ARPlanes: []
 --- !u!1 &1146847986
 GameObject:
   m_ObjectHideFlags: 0
