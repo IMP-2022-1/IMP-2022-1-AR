@@ -20,7 +20,10 @@ public class PlanePotion : MonoBehaviour
     private GameObject unrealPotion;
     private GameObject realPotion;
     
-    private bool potionCheck; // check if potion is generated
+    private bool unrealPotionCheck; // check if unrealPotion is generated
+    private bool realPotionCheck;
+
+    private Vector3 unrealPotionPosition;
 
 
     Vector3 ARCameraPosition;
@@ -32,7 +35,8 @@ public class PlanePotion : MonoBehaviour
         ARCameraPosition = GameObject.FindGameObjectWithTag("MainCamera").transform.position;
         planeManager = GetComponent<ARPlaneManager>();
         anchorManager = GetComponent<ARAnchorManager>();
-        potionCheck = true;
+        unrealPotionCheck = true;
+        realPotionCheck = false;
     }
 
     // subscribe
@@ -52,8 +56,11 @@ public class PlanePotion : MonoBehaviour
     {
         // execute here any code that you want to execute when planes have been detected or changed
         foreach(ARPlane plane in args.added)
-        {
-            spawnUnRealPotion(plane);
+        {            
+            if (GameManager.instance.Score >= 3 && unrealPotionCheck)
+            {
+                spawnUnRealPotion(plane);
+            }            
         }
     }
 
@@ -84,7 +91,7 @@ public class PlanePotion : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-       if(GameManager.instance.Score >= 3 && potionCheck)
+       if(GameManager.instance.Score >= 3 && realPotionCheck)
         {
             spawnRealPotion();
         }
@@ -104,25 +111,32 @@ public class PlanePotion : MonoBehaviour
 
         }*/
 
-        // Spawn in plane's center
+        /*// Spawn in plane's center
         if (GameManager.instance.Score >= 3 && potionCheck)
         {
             Debug.Log("unrealPotion Spawn!!!");
             unrealPotion = Instantiate(unrealPotionToInstantiate, plane.transform.position, Quaternion.identity);
             potionCheck = false;
-        }
+        }*/
+        Debug.Log("unrealPotion Spawn!!!");
+        Debug.Log(Vector3.Distance(GameObject.FindGameObjectWithTag("MainCamera").transform.position, unrealPotionPosition));
+        unrealPotion = Instantiate(unrealPotionToInstantiate, plane.transform.position, Quaternion.identity);
+        unrealPotionPosition = unrealPotion.transform.position;
+        unrealPotionCheck = false;
+        realPotionCheck = true;
     }
 
     // Spawn real potion when player get closed to unreal potion
     private void spawnRealPotion()
     {
-        // Spawn in plane's center
-        Vector3 unrealPotionPosition = unrealPotion.transform.position;
-        if (Vector3.Distance(ARCameraPosition, unrealPotionPosition)<1f)
+        // Spawn in unrealPotion's loacation        
+        Debug.Log(Vector3.Distance(GameObject.FindGameObjectWithTag("MainCamera").transform.position, unrealPotionPosition));
+        if (Vector3.Distance(GameObject.FindGameObjectWithTag("MainCamera").transform.position, unrealPotionPosition)<2)
         {
-            Debug.Log("realPotion Spawn!!!");
+            Debug.Log("realPotion Spawn!!!");            
             realPotion = Instantiate(realPotionToInstantiate, unrealPotionPosition, Quaternion.identity);
             Destroy(unrealPotion);
+            realPotionCheck = false;
         }
     }
 }
