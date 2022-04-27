@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     // private Vector3 touchPosition;
     // bool touched;
     private int MosquitoLayerMask;
-    [SerializeField] 
+    [SerializeField]
     public GameObject Spawner; // When Mosquito Catching, Used
 
     [SerializeField] private Button sprayButton;
@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject Crosshair;
 
     void Start()
-    { 
+    {
         // touched = false;
         MosquitoLayerMask = 1 << LayerMask.NameToLayer("Mosquito");
 
@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
             Smoke.SetActive(true);
             SprayGauge -= Time.deltaTime;
 
-            if(SprayGauge <= 0)
+            if (SprayGauge <= 0)
             {
                 Smoke.SetActive(false);
                 isPressed = false;
@@ -78,6 +78,7 @@ public class Player : MonoBehaviour
             if (SprayGauge >= 0)
             {
                 Spray();
+
             }
         }
 
@@ -120,11 +121,11 @@ public class Player : MonoBehaviour
     public void Spray()
     {
         RaycastHit hit;
-        
+
         if (GameManager.instance.gamestatus == 1 || GameManager.instance.gamestatus == 2)
         {
 
-            if (Physics.SphereCast(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z) , SprayRadius, transform.forward, out hit, 10f, MosquitoLayerMask))
+            if (Physics.SphereCast(new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z), SprayRadius, transform.forward, out hit, 10f, MosquitoLayerMask))
             {
                 Debug.Log("Raycast Occur");
                 // Debug.DrawRay(Camera.main.transform.position, transform.forward * 10f, Color.blue, 1f);
@@ -161,13 +162,21 @@ public class Player : MonoBehaviour
     {
         Debug.Log("Button pressed");
         isPressed = true;
-        
-
+        StartCoroutine(SparySound());
     }
 
     public void ButtonUp()
     {
         // Debug.Log("Button not pressed");
         isPressed = false;
+    }
+
+    IEnumerator SparySound()
+    {
+        while (SprayGauge >= 0 && isPressed)
+        {
+            GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().SprayingStart();
+            yield return new WaitForSeconds(1f);
+        }
     }
 }

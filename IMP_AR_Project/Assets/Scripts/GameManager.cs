@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     public Slider soundMusic;
 
     // About Option
+    public bool optionSwitch;
     private AudioSource Effect;
     private AudioSource Music;
     private GameObject SoundEffectOn;
@@ -66,7 +67,10 @@ public class GameManager : MonoBehaviour
             Score = 0;
             TimeCount = 0;
             Player.HP = 3;
-            OptionCheck();
+
+            // option control Swtich
+            if (optionSwitch)
+                OptionCheck();
         }
 
         // When Game Status is Playing mode

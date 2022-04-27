@@ -58,6 +58,7 @@ public class UIManager : MonoBehaviour
     {
         optionScreen.gameObject.SetActive(true);
         mainScreen.gameObject.SetActive(false);
+        GameManager.instance.optionSwitch = true;
     }
 
     // Go to Main Screen Quit
@@ -68,6 +69,7 @@ public class UIManager : MonoBehaviour
         gameoverScreen.gameObject.SetActive(false);
         mainBeforeScreen.gameObject.SetActive(false);
         mainScreen.gameObject.SetActive(true);
+        GameManager.instance.optionSwitch = false;
         GameManager.instance.gamestatus = 0;
     }
 
@@ -141,6 +143,7 @@ public class UIManager : MonoBehaviour
         PlayInside_Cover.alpha = 0;
         Damage_Cover.alpha = 0;
 
+        optionScreen.gameObject.SetActive(false);
         StartCoroutine(StartFade());
     }
 
