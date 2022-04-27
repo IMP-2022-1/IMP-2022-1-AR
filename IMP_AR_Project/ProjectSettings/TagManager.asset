@@ -9,6 +9,7 @@ TagManager:
   - PlayUI
   - sliderSound
   - HPBlood
+  - Potion
   layers:
   - Default
   - TransparentFX
