@@ -178,8 +178,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
+  MqAudioSource: {fileID: 0}
   MosquitoHP: 2
   MosquitoDamage: 1
+  HeatedAnimationStart: 1
 --- !u!1 &1064932830278113708
 GameObject:
   m_ObjectHideFlags: 0
