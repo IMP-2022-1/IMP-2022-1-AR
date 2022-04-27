@@ -437,7 +437,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &86363638
 Transform:
   m_ObjectHideFlags: 0
@@ -3891,6 +3891,8 @@ MonoBehaviour:
   resultTime: {fileID: 1856018498}
   highScore: {fileID: 369579147}
   highTime: {fileID: 808050809}
+  savehighScore: 0
+  savehighTime: 0
   Timer: {fileID: 1623451939}
   playBeforeCount: {fileID: 1837738376}
   ScoreCount: {fileID: 1709126318}
@@ -5348,7 +5350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7728104911530525640, guid: 139faa26048f95440a75e0ec5b1bc6b7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 7728104911530525640, guid: 139faa26048f95440a75e0ec5b1bc6b7, type: 3}
       propertyPath: m_LocalScale.z

@@ -188,14 +188,14 @@ public class UIManager : MonoBehaviour
         CanvasGroup canvasGroup = Damage_Cover;
         while (canvasGroup.alpha < 1)
         {
-            canvasGroup.alpha += Time.deltaTime * 20f;
+            canvasGroup.alpha += Time.deltaTime * 5f;
             yield return new WaitForSeconds(.005f);
         }
         yield return new WaitForSeconds(.01f);
 
         while (canvasGroup.alpha > 0)
         {
-            canvasGroup.alpha -= Time.deltaTime * 20f;
+            canvasGroup.alpha -= Time.deltaTime * 5f;
             yield return new WaitForSeconds(.005f);
         }
         yield return null;
@@ -232,7 +232,7 @@ public class UIManager : MonoBehaviour
 
         // 2. Play the Sigh
         GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Sigh();
-        yield return new WaitForSeconds(.75f);
+        yield return new WaitForSeconds(.25f);
 
         // 3. Show the Message
         while (canvasGroup2.alpha < 1)
@@ -241,7 +241,7 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(.0005f);
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.5f);
 
         // 4. and Clean up BG
         while (canvasGroup.alpha > 0)
@@ -250,7 +250,7 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(.0005f);
         }
 
-        yield return new WaitForSeconds(.75f);
+        yield return new WaitForSeconds(.5f);
 
         // 5. and Clean up Message
         while (canvasGroup2.alpha > 0)
@@ -263,51 +263,24 @@ public class UIManager : MonoBehaviour
 
         // 6. Show the Count Down
         GameManager.instance.playBeforeCount.gameObject.SetActive(true);
-        GameManager.instance.playBeforeCount.fontSize = 128;
+        GameManager.instance.playBeforeCount.fontSize = 72;
         GameManager.instance.playBeforeCount.text = "3";
         GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Beep();
 
-        while (GameManager.instance.playBeforeCount.fontSize > 72)
-        {
-            GameManager.instance.playBeforeCount.fontSize -= 1;
-            yield return new WaitForSeconds(.0005f);
-        }
-
         yield return new WaitForSeconds(.93f);
 
-        GameManager.instance.playBeforeCount.fontSize = 128;
         GameManager.instance.playBeforeCount.text = "2";
         GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Beep();
 
-        while (GameManager.instance.playBeforeCount.fontSize > 72)
-        {
-            GameManager.instance.playBeforeCount.fontSize -= 1;
-            yield return new WaitForSeconds(.0005f);
-        }
-
         yield return new WaitForSeconds(.93f);
 
-        GameManager.instance.playBeforeCount.fontSize = 128;
         GameManager.instance.playBeforeCount.text = "1";
         GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Beep();
 
-        while (GameManager.instance.playBeforeCount.fontSize > 72)
-        {
-            GameManager.instance.playBeforeCount.fontSize -= 1;
-            yield return new WaitForSeconds(.0005f);
-        }
-
         yield return new WaitForSeconds(.93f);
 
-        GameManager.instance.playBeforeCount.fontSize = 90;
         GameManager.instance.playBeforeCount.text = "Start!";
         GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Alarm();
-
-        while (GameManager.instance.playBeforeCount.fontSize > 64)
-        {
-            GameManager.instance.playBeforeCount.fontSize -= 1;
-            yield return new WaitForSeconds(.0005f);
-        }
 
         yield return new WaitForSeconds(1.85f);
 
