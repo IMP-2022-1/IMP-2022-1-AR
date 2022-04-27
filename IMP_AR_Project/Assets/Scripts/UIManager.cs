@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
 {
     // About UI
     public GameObject mainScreen;
+    public GameObject mainBeforeScreen;
     public GameObject playScreen;
     public GameObject tutorialScreen;
     public GameObject optionScreen;
@@ -15,16 +16,27 @@ public class UIManager : MonoBehaviour
     public CanvasGroup BeginInside_Cover;
     public CanvasGroup Begin_Cover;
     public CanvasGroup Damage_Cover;
+    public CanvasGroup Play_Cover;
+    public CanvasGroup PlayInside_Cover;
 
     private int HP; // Player HP replica
+    private float tempVolume; // temporary save the volume
     private GameObject life;
     private RectTransform lifeRect;
     List<GameObject> lifeList = new List<GameObject>();
 
-    // Start Button
+    // Start Button (Show the UI before playing)
+    public void mainStart_before()
+    {
+        mainBeforeScreen.gameObject.SetActive(true);
+        StartCoroutine(PlayFade());
+    }
+
+    // and Start the game
     public void mainStart()
     {
         mainScreen.gameObject.SetActive(false);
+        mainBeforeScreen.gameObject.SetActive(false);
         playScreen.gameObject.SetActive(true);
         GameManager.instance.gamestatus = 1;
 
@@ -54,6 +66,7 @@ public class UIManager : MonoBehaviour
         tutorialScreen.gameObject.SetActive(false);
         optionScreen.gameObject.SetActive(false);
         gameoverScreen.gameObject.SetActive(false);
+        mainBeforeScreen.gameObject.SetActive(false);
         mainScreen.gameObject.SetActive(true);
         GameManager.instance.gamestatus = 0;
     }
@@ -124,13 +137,15 @@ public class UIManager : MonoBehaviour
         Begin_Cover.alpha = 1;
         BeginInside_Cover.alpha = 0;
         Main_Cover.alpha = 0;
+        Play_Cover.alpha = 0;
+        PlayInside_Cover.alpha = 0;
         Damage_Cover.alpha = 0;
 
-        StartCoroutine(DoFade());
+        StartCoroutine(StartFade());
     }
 
     // Show the notice before start the game
-    IEnumerator DoFade()
+    IEnumerator StartFade()
     {
         CanvasGroup canvasGroup = BeginInside_Cover;
         yield return new WaitForSeconds(.5f);
@@ -180,6 +195,128 @@ public class UIManager : MonoBehaviour
             canvasGroup.alpha -= Time.deltaTime * 20f;
             yield return new WaitForSeconds(.005f);
         }
+        yield return null;
+    }
+
+    // Before the play, We will show the some UI
+    IEnumerator PlayFade()
+    {
+        CanvasGroup canvasGroup = Play_Cover;
+        CanvasGroup canvasGroup2 = PlayInside_Cover;
+        CanvasGroup canvasGroup3 = Main_Cover;
+        AudioSource music = GameObject.Find("Music").GetComponent<AudioSource>();
+        tempVolume = music.volume;
+        GameManager.instance.playBeforeCount.gameObject.SetActive(false);
+        canvasGroup.alpha = 0;
+        canvasGroup2.alpha = 0;
+
+        yield return new WaitForSeconds(.75f);
+
+        // 0. Fade out Main Screen
+        while (canvasGroup3.alpha > 0)
+        {
+            canvasGroup3.alpha -= Time.deltaTime * 0.75f;
+            yield return new WaitForSeconds(.0005f);
+        }
+
+        // 1. Music Fade out and Show the BG
+        while (canvasGroup.alpha < 1 || music.volume > 0)
+        {
+            music.volume -= Time.deltaTime * 0.50f;
+            canvasGroup.alpha += Time.deltaTime * 0.75f;
+            yield return new WaitForSeconds(.0005f);
+        }
+
+        // 2. Play the Sigh
+        GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Sigh();
+        yield return new WaitForSeconds(.75f);
+
+        // 3. Show the Message
+        while (canvasGroup2.alpha < 1)
+        {
+            canvasGroup2.alpha += Time.deltaTime * 0.75f;
+            yield return new WaitForSeconds(.0005f);
+        }
+
+        yield return new WaitForSeconds(3f);
+
+        // 4. and Clean up BG
+        while (canvasGroup.alpha > 0)
+        {
+            canvasGroup.alpha -= Time.deltaTime * 0.75f;
+            yield return new WaitForSeconds(.0005f);
+        }
+
+        yield return new WaitForSeconds(.75f);
+
+        // 5. and Clean up Message
+        while (canvasGroup2.alpha > 0)
+        {
+            canvasGroup2.alpha -= Time.deltaTime * 0.75f;
+            yield return new WaitForSeconds(.0005f);
+        }
+
+        yield return new WaitForSeconds(.9f);
+
+        // 6. Show the Count Down
+        GameManager.instance.playBeforeCount.gameObject.SetActive(true);
+        GameManager.instance.playBeforeCount.fontSize = 128;
+        GameManager.instance.playBeforeCount.text = "3";
+        GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Beep();
+
+        while (GameManager.instance.playBeforeCount.fontSize > 72)
+        {
+            GameManager.instance.playBeforeCount.fontSize -= 1;
+            yield return new WaitForSeconds(.0005f);
+        }
+
+        yield return new WaitForSeconds(.93f);
+
+        GameManager.instance.playBeforeCount.fontSize = 128;
+        GameManager.instance.playBeforeCount.text = "2";
+        GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Beep();
+
+        while (GameManager.instance.playBeforeCount.fontSize > 72)
+        {
+            GameManager.instance.playBeforeCount.fontSize -= 1;
+            yield return new WaitForSeconds(.0005f);
+        }
+
+        yield return new WaitForSeconds(.93f);
+
+        GameManager.instance.playBeforeCount.fontSize = 128;
+        GameManager.instance.playBeforeCount.text = "1";
+        GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Beep();
+
+        while (GameManager.instance.playBeforeCount.fontSize > 72)
+        {
+            GameManager.instance.playBeforeCount.fontSize -= 1;
+            yield return new WaitForSeconds(.0005f);
+        }
+
+        yield return new WaitForSeconds(.93f);
+
+        GameManager.instance.playBeforeCount.fontSize = 90;
+        GameManager.instance.playBeforeCount.text = "Start!";
+        GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Alarm();
+
+        while (GameManager.instance.playBeforeCount.fontSize > 64)
+        {
+            GameManager.instance.playBeforeCount.fontSize -= 1;
+            yield return new WaitForSeconds(.0005f);
+        }
+
+        yield return new WaitForSeconds(1.85f);
+
+        // 7. Setting value
+        canvasGroup.alpha = 0;
+        canvasGroup2.alpha = 0;
+        canvasGroup3.alpha = 1;
+        music.volume = tempVolume;
+        GameManager.instance.playBeforeCount.gameObject.SetActive(false);
+
+        // 8. Game Start
+        mainStart();
         yield return null;
     }
 
