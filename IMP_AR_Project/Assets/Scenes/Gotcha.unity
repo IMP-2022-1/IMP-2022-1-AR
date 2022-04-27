@@ -412,10 +412,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.2
-  m_Text: 'for the best and most immersive experience
-
-    please use Headphones
-    and focus on.'
+  m_Text: Look around and beat mosquitoes quickly!
 --- !u!222 &81547558
 CanvasRenderer:
   m_ObjectHideFlags: 0
