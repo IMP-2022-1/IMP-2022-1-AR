@@ -27,6 +27,7 @@ public class SoundEffectController : MonoBehaviour
 
     public void SprayingStart()
     {
+        MyAudioSource.Stop();
         MyAudioSource.clip = Spraying;
         MyAudioSource.Play();
     }

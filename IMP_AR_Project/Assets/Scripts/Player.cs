@@ -176,7 +176,7 @@ public class Player : MonoBehaviour
         while (SprayGauge >= 0 && isPressed)
         {
             GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().SprayingStart();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.5f);
         }
     }
 }

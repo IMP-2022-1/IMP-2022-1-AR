@@ -23,9 +23,16 @@ public class GameManager : MonoBehaviour
 
     public bool RTA = true;
 
-    // About UI
+
+    // About Result
     public Text resultScore;
     public Text resultTime;
+    public Text highScore;
+    public Text highTime;
+    public int savehighScore;
+    public float savehighTime;
+
+    // About UI
     public Text Timer;
     public Text playBeforeCount;
     public Text ScoreCount;
@@ -84,6 +91,30 @@ public class GameManager : MonoBehaviour
 
             PlayerSprayGauge.value = Player.SprayGauge;
         }
+
+        // when Game is over, save the result for high score
+        if (GameManager.instance.gamestatus == 3)
+        {
+            saveResult();
+        }
+    }
+
+    private void saveResult()
+    {
+        if (Score > savehighScore)
+        {
+            PlayerPrefs.SetInt("highScore", Score);
+            savehighScore = PlayerPrefs.GetInt("highScore", 0);
+            PlayerPrefs.Save();
+        }
+
+        if (TimeCount > savehighTime)
+        {
+            PlayerPrefs.SetFloat("highTime", TimeCount);
+            savehighTime = PlayerPrefs.GetFloat("highTime", 0);
+            PlayerPrefs.Save();
+        }
+
     }
 
     public void controlSound(float vol)
