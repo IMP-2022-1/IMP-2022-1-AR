@@ -43,9 +43,12 @@ public class GameManager : MonoBehaviour
 
     // About Option
     public bool optionSwitch;
+    public bool vibrateSwitch; // true : Can vibrate
+    private int StepEffect;
     private AudioSource Effect;
     private AudioSource Music;
     private GameObject SoundEffectOn;
+    private GameObject SoundEffectPart;
     private GameObject SoundEffectOff;
     private GameObject SoundMusicOn;
     private GameObject SoundMusicOff;
@@ -57,9 +60,12 @@ public class GameManager : MonoBehaviour
         spawner = GameObject.Find("Spawner").GetComponent<Spawner>();
 
         // About Option valuable
+        vibrateSwitch = true;
+        StepEffect = 0;
         Effect = GameObject.Find("SoundEffect").GetComponent<AudioSource>();
         Music = GameObject.Find("Music").GetComponent<AudioSource>();
         SoundEffectOn = GameObject.Find("SoundEffectOn");
+        SoundEffectPart = GameObject.Find("SoundEffectPart");
         SoundEffectOff = GameObject.Find("SoundEffectOff");
         SoundMusicOn = GameObject.Find("SoundMusicOn");
         SoundMusicOff = GameObject.Find("SoundMusicOff");
@@ -130,12 +136,24 @@ public class GameManager : MonoBehaviour
         // Volume On/Off UI
         if (Effect.volume == 0)
         {
-            SoundEffectOn.SetActive(false);
-            SoundEffectOff.SetActive(true);
+            if (vibrateSwitch)
+            {
+                SoundEffectOn.SetActive(false);
+                SoundEffectPart.SetActive(true);
+                SoundEffectOff.SetActive(false);
+            }
+            else
+            {
+                SoundEffectOn.SetActive(false);
+                SoundEffectPart.SetActive(false);
+                SoundEffectOff.SetActive(true);
+            }
+
         }
         else
         {
             SoundEffectOn.SetActive(true);
+            SoundEffectPart.SetActive(false);
             SoundEffectOff.SetActive(false);
         }
 
@@ -153,10 +171,29 @@ public class GameManager : MonoBehaviour
 
     public void OptionEffectMute()
     {
-        if (Effect.volume > 0)
+
+        // 1. Mute only vibrate
+        if (StepEffect == 0)
+        {
+            vibrateSwitch = true;
             soundEffect.value = 0;
-        else
+            StepEffect++;
+        }
+        // 2. Mute All Effects
+        else if (StepEffect == 1)
+        {
+            vibrateSwitch = false;
+            soundEffect.value = 0;
+            StepEffect++;
+        }
+        // 3. Turn on Volume
+        else if (StepEffect == 2)
+        {
+            vibrateSwitch = true;
             soundEffect.value = 1;
+            StepEffect = 0;
+        }
+
     }
 
     public void OptionMusicMute()

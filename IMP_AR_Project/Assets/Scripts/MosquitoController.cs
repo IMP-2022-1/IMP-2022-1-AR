@@ -28,7 +28,7 @@ public class MosquitoController : MonoBehaviour
         public Vector3 RotatingDirection;
     }
     protected RotatingInformation RI;
-    
+
     // Used in Moving 2
     protected bool RightLeft;
 
@@ -82,7 +82,7 @@ public class MosquitoController : MonoBehaviour
 
 
     // Attack
-    public void ReadyToAttack () 
+    public void ReadyToAttack()
     {
         /* In GameManager Add
          // When, must be in field!
@@ -126,11 +126,12 @@ public class MosquitoController : MonoBehaviour
          * GameObject.Find("GameManager").GetComponent<Script Name>().LifHUD();
          */
 
-            Player.GetComponent<Player>().HP -= MosquitoDamage;
+        Player.GetComponent<Player>().HP -= MosquitoDamage;
 
+        if (GameManager.instance.vibrateSwitch == true)
             Handheld.Vibrate();
-            // Attacked Sound Start
-            GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().AttackedStart();
+        // Attacked Sound Start
+        GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().AttackedStart();
 
         /* Attack
         * To Destroy Mosquito When Animator over
@@ -142,7 +143,7 @@ public class MosquitoController : MonoBehaviour
 
 
     // Heated - Player 
-    public void MosquitoHeated ()
+    public void MosquitoHeated()
     {
         // In 'Player' Script, After the Debug.Log("Heating") - MosquitoController create,
         // raycastedMosquito.MosquitoHeated()
@@ -156,7 +157,7 @@ public class MosquitoController : MonoBehaviour
     }
 
     IEnumerator Heated()
-    { 
+    {
         // Q. Heated Mosquito's HP down Intergrated??
         Animator animator = GetComponent<Animator>();
         int Damaged = Animator.StringToHash("Damaged");
