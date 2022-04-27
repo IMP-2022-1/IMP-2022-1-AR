@@ -335,12 +335,10 @@ public class UIManager : MonoBehaviour
 
             // Show the Result
             GameManager.instance.resultScore.text = GameManager.instance.Score.ToString() + " Kills";
-            float minute = GameManager.instance.TimeCount / 60.0f - 1;
-            GameManager.instance.resultTime.text = minute.ToString("F0") + ":" + GameManager.instance.TimeCount.ToString("F0");
+            GameManager.instance.resultTime.text = GameManager.instance.timeMinute.ToString("F0") + ":" + GameManager.instance.TimeCount.ToString("F0");
 
             GameManager.instance.highScore.text = GameManager.instance.savehighScore.ToString() + " Kills";
-            float highMinute = GameManager.instance.savehighTime / 60.0f - 1;
-            GameManager.instance.highTime.text = highMinute.ToString("F0") + ":" + GameManager.instance.savehighTime.ToString("F0");
+            GameManager.instance.highTime.text = GameManager.instance.savehighMinute.ToString("F0") + ":" + GameManager.instance.savehighSecond.ToString("F0");
         }
     }
 }

@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     public bool RTA = true;
 
+    // About Time
+    public int timeMinute;
 
     // About Result
     public Text resultScore;
@@ -30,7 +32,8 @@ public class GameManager : MonoBehaviour
     public Text highScore;
     public Text highTime;
     public int savehighScore;
-    public float savehighTime;
+    public int savehighMinute;
+    public float savehighSecond;
 
     // About UI
     public Text Timer;
@@ -79,6 +82,7 @@ public class GameManager : MonoBehaviour
             // setting initial variable
             Score = 0;
             TimeCount = 0;
+            timeMinute = 0;
             Player.HP = 3;
 
             // option control Swtich
@@ -114,10 +118,16 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.Save();
         }
 
-        if (TimeCount > savehighTime)
+        Debug.Log(TimeCount);
+        Debug.Log(timeMinute);
+        Debug.Log(savehighSecond);
+        Debug.Log(savehighMinute);
+        if (timeMinute > savehighMinute || TimeCount > savehighSecond && timeMinute >= savehighMinute)
         {
-            PlayerPrefs.SetFloat("highTime", TimeCount);
-            savehighTime = PlayerPrefs.GetFloat("highTime", 0);
+            PlayerPrefs.SetInt("highMinute", timeMinute);
+            PlayerPrefs.SetFloat("highSecond", TimeCount);
+            savehighMinute = PlayerPrefs.GetInt("highMinute", 0);
+            savehighSecond = PlayerPrefs.GetFloat("highSecond", 0);
             PlayerPrefs.Save();
         }
 
@@ -176,6 +186,7 @@ public class GameManager : MonoBehaviour
         if (StepEffect == 0)
         {
             vibrateSwitch = true;
+            Handheld.Vibrate();
             soundEffect.value = 0;
             StepEffect++;
         }
@@ -189,6 +200,7 @@ public class GameManager : MonoBehaviour
         // 3. Turn on Volume
         else if (StepEffect == 2)
         {
+            GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Beep();
             vibrateSwitch = true;
             soundEffect.value = 1;
             StepEffect = 0;
@@ -207,6 +219,13 @@ public class GameManager : MonoBehaviour
     private void TimerOperation()
     {
         TimeCount += Time.deltaTime;
+
+        if (TimeCount >= 60.0f)
+        {
+            TimeCount = 0;
+            timeMinute++;
+        }
+
         TimeLimit -= Time.deltaTime;
         Timer.text = TimeLimit.ToString("F1");
         TimerBar.value -= Time.deltaTime / 10.0f;
