@@ -31,13 +31,30 @@ public class GameManager : MonoBehaviour
     public Text ScoreCount;
     public Slider TimerBar;
     public Slider PlayerSprayGauge;
+    public Slider soundEffect;
+    public Slider soundMusic;
 
+    // About Option
+    private AudioSource Effect;
+    private AudioSource Music;
+    private GameObject SoundEffectOn;
+    private GameObject SoundEffectOff;
+    private GameObject SoundMusicOn;
+    private GameObject SoundMusicOff;
 
 
     private void Awake()
     {
         instance = this;
         spawner = GameObject.Find("Spawner").GetComponent<Spawner>();
+
+        // About Option valuable
+        Effect = GameObject.Find("SoundEffect").GetComponent<AudioSource>();
+        Music = GameObject.Find("Music").GetComponent<AudioSource>();
+        SoundEffectOn = GameObject.Find("SoundEffectOn");
+        SoundEffectOff = GameObject.Find("SoundEffectOff");
+        SoundMusicOn = GameObject.Find("SoundMusicOn");
+        SoundMusicOff = GameObject.Find("SoundMusicOff");
     }
 
     void Update()
@@ -49,6 +66,7 @@ public class GameManager : MonoBehaviour
             Score = 0;
             TimeCount = 0;
             Player.HP = 3;
+            OptionCheck();
         }
 
         // When Game Status is Playing mode
@@ -67,6 +85,51 @@ public class GameManager : MonoBehaviour
     public void controlSound(float vol)
     {
 
+    }
+
+    private void OptionCheck()
+    {
+        Effect.volume = soundEffect.value;
+        Music.volume = soundMusic.value;
+
+        // Volume On/Off UI
+        if (Effect.volume == 0)
+        {
+            SoundEffectOn.SetActive(false);
+            SoundEffectOff.SetActive(true);
+        }
+        else
+        {
+            SoundEffectOn.SetActive(true);
+            SoundEffectOff.SetActive(false);
+        }
+
+        if (Music.volume == 0)
+        {
+            SoundMusicOn.SetActive(false);
+            SoundMusicOff.SetActive(true);
+        }
+        else
+        {
+            SoundMusicOn.SetActive(true);
+            SoundMusicOff.SetActive(false);
+        }
+    }
+
+    public void OptionEffectMute()
+    {
+        if (Effect.volume > 0)
+            soundEffect.value = 0;
+        else
+            soundEffect.value = 1;
+    }
+
+    public void OptionMusicMute()
+    {
+        if (Music.volume > 0)
+            soundMusic.value = 0;
+        else
+            soundMusic.value = 1;
     }
 
     private void TimerOperation()

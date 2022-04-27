@@ -238,7 +238,7 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(.0005f);
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
         // 4. and Clean up BG
         while (canvasGroup.alpha > 0)
