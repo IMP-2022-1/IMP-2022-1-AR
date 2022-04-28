@@ -126,6 +126,7 @@ public class UIManager : MonoBehaviour
 
         // if HP is changed by Mosquitos
         lifeList[HP].SetActive(false);
+        lifeList[HP - 1].SetActive(true);
 
         // Damage Effects
         if (GameManager.instance.gamestatus == 4)
