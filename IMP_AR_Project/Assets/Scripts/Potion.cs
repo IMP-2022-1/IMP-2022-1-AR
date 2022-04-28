@@ -28,7 +28,6 @@ public class Potion : MonoBehaviour
 
     // About RayCast
     private Vector3 touchPosition;
-    bool touched;
     private int MosquitoLayerMask;
 
     // Start is called before the first frame update
@@ -38,8 +37,6 @@ public class Potion : MonoBehaviour
         planeManager = GetComponent<ARPlaneManager>();        
         unrealPotionCheck = true;
         realPotionCheck = false;
-
-        touched = false;
         MosquitoLayerMask = 1 << LayerMask.NameToLayer("Mosquito"); 
     }
 
@@ -90,7 +87,7 @@ public class Potion : MonoBehaviour
     {
         // Spawn in unrealPotion's loacation        
         Debug.Log("Distance between MainCamera and unrealPotion" + Vector3.Distance(GameObject.FindGameObjectWithTag("MainCamera").transform.position, unrealPotionPosition));
-        if (Vector3.Distance(GameObject.FindGameObjectWithTag("MainCamera").transform.position, unrealPotionPosition) < 3)
+        if (Vector3.Distance(GameObject.FindGameObjectWithTag("MainCamera").transform.position, unrealPotionPosition) < 2)
         {
             Debug.Log("realPotion Spawn!!!");
             realPotion = Instantiate(realPotionPrefab, unrealPotionPosition, Quaternion.identity);

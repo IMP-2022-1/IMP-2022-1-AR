@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     // About UI
+    public GameObject awakeScreen;
     public GameObject mainScreen;
     public GameObject mainBeforeScreen;
     public GameObject playScreen;
@@ -125,6 +126,7 @@ public class UIManager : MonoBehaviour
 
         // if HP is changed by Mosquitos
         lifeList[HP].SetActive(false);
+        lifeList[HP - 1].SetActive(true);
 
         // Damage Effects
         if (GameManager.instance.gamestatus == 4)
@@ -143,6 +145,8 @@ public class UIManager : MonoBehaviour
         PlayInside_Cover.alpha = 0;
         Damage_Cover.alpha = 0;
 
+        awakeScreen.gameObject.SetActive(true);
+        mainScreen.gameObject.SetActive(false);
         optionScreen.gameObject.SetActive(false);
         StartCoroutine(StartFade());
     }
@@ -170,6 +174,8 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         Begin_Cover.alpha = 0;
+        awakeScreen.gameObject.SetActive(false);
+        mainScreen.gameObject.SetActive(true);
 
         CanvasGroup canvasGroup2 = Main_Cover;
         while (canvasGroup2.alpha < 1)
