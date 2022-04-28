@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    public static Player instance;  // Use Singleton Pattern
+
     // Player Health Point
     public int HP = 3;
 
@@ -153,6 +155,17 @@ public class Player : MonoBehaviour
                         Destroy(hit.transform.gameObject);
                         Spawner.GetComponent<Spawner>().spawnMosquito();
                     }
+                }
+                else if (hit.collider != null && hit.collider.CompareTag("Potion"))
+                {
+                    Debug.Log("Heating Potion!!");
+                    if (HP < 3)
+                    {
+                        Debug.Log("HP Before Eating Potion : " + HP);
+                        HP = HP + 1;
+                        Debug.Log("HP After Eating Potion : " + HP);
+                    }
+                    Destroy(hit.collider.gameObject);
                 }
             }
         }
