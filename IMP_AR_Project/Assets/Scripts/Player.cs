@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private GameObject Smoke;
 
-    private bool isPressed = false;
+    public bool isPressed = false;
 
     public float SprayGauge = 10.02f;
 
@@ -151,9 +151,11 @@ public class Player : MonoBehaviour
                         GameManager.instance.TimeLimit = 10f;
                         GameManager.instance.TimerBar.value = 1;
 
-                        Spawner.GetComponent<Spawner>().playerDestroyMosquito();
-                        Destroy(hit.transform.gameObject);
+                        Spawner.GetComponent<Spawner>().destroyMosquito();
                         Spawner.GetComponent<Spawner>().spawnMosquito();
+                        /*Spawner.GetComponent<Spawner>().playerDestroyMosquito();
+                        Destroy(hit.transform.gameObject);
+                        Spawner.GetComponent<Spawner>().spawnMosquito();*/
                     }
                 }
                 else if (hit.collider != null && hit.collider.CompareTag("Potion"))

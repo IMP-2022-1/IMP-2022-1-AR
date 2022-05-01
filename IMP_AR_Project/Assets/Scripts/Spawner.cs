@@ -13,6 +13,17 @@ public class Spawner : MonoBehaviour
     // Varialbe for dicide limition of mosquito's spawn locaiton
     public float distance = 1;
 
+    private void Start()
+    {
+        for (int i = 0; i < MosquitoPrefab.Length; i++)
+        {
+            var TempMosquito = Instantiate(MosquitoPrefab[i]);
+            Mosquitos.Add(TempMosquito);
+            TempMosquito.SetActive(false);
+            TempMosquito.transform.SetParent(transform);
+        }
+    }
+
     public void spawnMosquito()
     {
         // if spawnEnable true -> Animation can't occur 
@@ -34,17 +45,28 @@ public class Spawner : MonoBehaviour
         Transform ARCameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
         Vector3 MosquitoTempPosition = Random.insideUnitCircle.normalized;
         Vector3 MosquitoPosition = ARCameraTransform.position + new Vector3(MosquitoTempPosition.x, Random.Range(-0.3f,0.3f), MosquitoTempPosition.y);
-        GameObject MosquitoObject;
+        // GameObject MosquitoObject;
         if (GameManager.instance.Score < 6)
-            MosquitoObject = Instantiate(MosquitoPrefab[0], MosquitoPosition, Quaternion.identity);
+        {
+            Mosquitos[0].transform.position = MosquitoPosition; 
+            Mosquitos[0].SetActive(true);
+            // MosquitoObject = Instantiate(MosquitoPrefab[0], MosquitoPosition, Quaternion.identity);
+        }
         else if (GameManager.instance.Score < 11)
         {
-            MosquitoObject = Instantiate(MosquitoPrefab[Random.Range(0, (int) MosquitoPrefab.Length / 2)], MosquitoPosition, Quaternion.identity);
-        } else
-        {
-            MosquitoObject = Instantiate(MosquitoPrefab[Random.Range((int) MosquitoPrefab.Length/2, MosquitoPrefab.Length)], MosquitoPosition, Quaternion.identity);
+            int NoM = Random.Range(0, (int)(Mosquitos.Count / 2));
+            Mosquitos[NoM].transform.position = MosquitoPosition;
+            Mosquitos[NoM].SetActive(true);
+            // MosquitoObject = Instantiate(MosquitoPrefab[Random.Range(0, (int)MosquitoPrefab.Length / 2)], MosquitoPosition, Quaternion.identity);
         }
-        Mosquitos.Add(MosquitoObject);
+        else
+        {
+            int NoM = Random.Range((int)(Mosquitos.Count / 2), Mosquitos.Count);
+            Mosquitos[NoM].transform.position = MosquitoPosition;
+            Mosquitos[NoM].SetActive(true);
+            // MosquitoObject = Instantiate(MosquitoPrefab[Random.Range((int)MosquitoPrefab.Length / 2, MosquitoPrefab.Length)], MosquitoPosition, Quaternion.identity);
+        }
+        //Mosquitos.Add(MosquitoObject);
     }
 
 
@@ -53,8 +75,9 @@ public class Spawner : MonoBehaviour
     {
         for (int i = Mosquitos.Count - 1; i >= 0; i--)
         {
-            Destroy(Mosquitos[i]);
-            Mosquitos.Remove(Mosquitos[i]);
+            Mosquitos[i].SetActive(false);
+            /*Destroy(Mosquitos[i]);
+            Mosquitos.Remove(Mosquitos[i]);*/
         }
     }
 
