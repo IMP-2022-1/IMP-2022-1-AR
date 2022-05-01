@@ -269,24 +269,28 @@ public class UIManager : MonoBehaviour
 
         // 6. Show the Count Down
         GameManager.instance.playBeforeCount.gameObject.SetActive(true);
+        GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Beep();
         GameManager.instance.playBeforeCount.fontSize = 72;
         GameManager.instance.playBeforeCount.text = "3";
-        GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Beep();
+        
 
         yield return new WaitForSeconds(.93f);
 
+        GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Beep();
         GameManager.instance.playBeforeCount.text = "2";
-        GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Beep();
+        
 
         yield return new WaitForSeconds(.93f);
 
+        GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Beep();
         GameManager.instance.playBeforeCount.text = "1";
-        GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Beep();
+        
 
         yield return new WaitForSeconds(.93f);
 
-        GameManager.instance.playBeforeCount.text = "Start!";
         GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().ReadyToPlay_Alarm();
+        GameManager.instance.playBeforeCount.text = "Start!";
+        
 
         yield return new WaitForSeconds(1.85f);
 

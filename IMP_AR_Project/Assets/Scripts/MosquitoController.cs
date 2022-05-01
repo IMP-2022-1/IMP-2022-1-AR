@@ -128,10 +128,11 @@ public class MosquitoController : MonoBehaviour
 
         Player.GetComponent<Player>().HP -= MosquitoDamage;
 
-        if (GameManager.instance.vibrateSwitch == true)
-            Handheld.Vibrate();
         // Attacked Sound Start
         GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().AttackedStart();
+
+        if (GameManager.instance.vibrateSwitch == true)
+            Handheld.Vibrate();
 
         /* Attack
         * To Destroy Mosquito When Animator over

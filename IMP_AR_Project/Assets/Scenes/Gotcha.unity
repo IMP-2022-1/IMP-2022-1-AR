@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6226,13 +6226,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 626ee01553d5eb84fa9c0a8be9df5529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Attacked: {fileID: 8300000, guid: b3ecc364f0a74514285aa6db398b1f40, type: 3}
+  Attacked: {fileID: 8300000, guid: f4b9c5c10af3e5e4095fb8421e3c3b96, type: 3}
   Spraying: {fileID: 8300000, guid: bb840b5af376b9b4ab4571fa83d324c8, type: 3}
   KilledMosquito: {fileID: 8300000, guid: 6c78462b0e5df50448996ea3d37285d1, type: 3}
-  MosquitoHeated: {fileID: 8300000, guid: 2c50d55424686f547b9040ff048bb23c, type: 3}
+  MosquitoHeated: {fileID: 8300000, guid: c2e442108aa735f418482c5d4d3f4e3d, type: 3}
   ReadyToPlaySigh: {fileID: 8300000, guid: a7c69406c244b40448254f76c2798794, type: 3}
-  ReadyToPlayAlarm: {fileID: 8300000, guid: 80371dcf383712b479f7a53495fbe502, type: 3}
-  ReadyToPlayBeep: {fileID: 8300000, guid: 7b9ee2df3bf31b44a9cade9f6964a148, type: 3}
+  ReadyToPlayAlarm: {fileID: 8300000, guid: faeb0b7832aca4c43a6a704163bb1a1f, type: 3}
+  ReadyToPlayBeep: {fileID: 8300000, guid: f6f2a54e5183f3f4cbb20a944d8db626, type: 3}
+  FirstAid: {fileID: 8300000, guid: 8d073e1e98b244848a35caa22303903c, type: 3}
 --- !u!82 &1576415740
 AudioSource:
   m_ObjectHideFlags: 0

@@ -296,7 +296,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 139a7af87ef807c4daa34e8f8883a38d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: bfef01fcbc6e9ee4d9a501139d4c7ee6, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -395,8 +395,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
+  MqAudioSource: {fileID: 0}
   MosquitoHP: 6
   MosquitoDamage: 1
+  HeatedAnimationStart: 1
 --- !u!1 &7091084808094204827
 GameObject:
   m_ObjectHideFlags: 0
