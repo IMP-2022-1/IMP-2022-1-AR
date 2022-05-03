@@ -239,6 +239,7 @@ public class GameManager : MonoBehaviour
         {
             for (int i = spawner.Mosquitos.Count - 1; i >= 0; i--)
             {
+                if (spawner.Mosquitos[i].activeInHierarchy)
                 spawner.Mosquitos[i].GetComponent<MosquitoController>().ReadyToAttack();
             }
             RTA = false;
@@ -254,6 +255,7 @@ public class GameManager : MonoBehaviour
         // Mosquitos Attack
         for (int i = spawner.Mosquitos.Count - 1; i >= 0; i--)
         {
+            if(spawner.Mosquitos[i].activeInHierarchy)
             spawner.Mosquitos[i].GetComponent<MosquitoController>().MosquitoAttack();
         }
 
@@ -266,6 +268,7 @@ public class GameManager : MonoBehaviour
         {
             GameManager.instance.gamestatus = 3;
             spawner.destroyMosquito();
+            Player.isPressed = false;
 
             // GameOverMusic Start
             GameObject.Find("Music").GetComponent<MusicController>().GameOverMusicStart();

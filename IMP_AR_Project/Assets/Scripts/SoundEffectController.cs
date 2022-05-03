@@ -11,6 +11,7 @@ public class SoundEffectController : MonoBehaviour
     public AudioClip ReadyToPlaySigh;
     public AudioClip ReadyToPlayAlarm;
     public AudioClip ReadyToPlayBeep;
+    public AudioClip FirstAid;
     private AudioSource MyAudioSource;
 
     // Start is called before the first frame update
@@ -54,5 +55,15 @@ public class SoundEffectController : MonoBehaviour
     {
         MyAudioSource.clip = ReadyToPlayBeep;
         MyAudioSource.Play();
+    }
+
+    public void Acquire_First_Aid()
+    {
+        MyAudioSource.clip = FirstAid;
+        MyAudioSource.Play();
+
+        /*// Acquire FirstAid Sound Start
+        GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().Acquire_First_Aid();
+        */
     }
 }

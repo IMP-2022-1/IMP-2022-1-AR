@@ -179,6 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
   MqAudioSource: {fileID: 0}
+  OriginalMosquitoHP: 2
   MosquitoHP: 2
   MosquitoDamage: 1
   HeatedAnimationStart: 1

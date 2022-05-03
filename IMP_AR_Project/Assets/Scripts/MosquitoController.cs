@@ -9,11 +9,13 @@ public class MosquitoController : MonoBehaviour
     // About Mosquito
     protected int MosquitoMovingChoice;
     public AudioSource MqAudioSource;
+    public float OriginalMosquitoHP = 1;
     public float MosquitoHP = 1;
     public int MosquitoDamage = 1;
 
     // Used in Heated
-    public bool HeatedAnimationStart = true;
+    public bool HeatedAnimationStart; //= true; : OnEnable -> True, Because if Mosquito Object OnEnable, reset
+    public AudioClip Temp;
 
     // Used in Moving
     protected Vector3 OriPosition;
@@ -35,7 +37,7 @@ public class MosquitoController : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         // 0 : Rotating, 1 : Left and Right, 2 : Rotating Around Player, 3: rotating circle
         MosquitoMovingChoice = Random.Range(0, 4);
@@ -57,6 +59,15 @@ public class MosquitoController : MonoBehaviour
         // #Update3
         ArCameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
         ArCameraOriginPosition = ArCameraTransform.position;
+
+        // #Object pooling version
+        MosquitoHP = OriginalMosquitoHP;
+        if (Temp != null)
+        {
+            MqAudioSource.clip = Temp;
+            MqAudioSource.Play();
+        }
+        HeatedAnimationStart = true;
     }
 
     // Update is called once per frame
@@ -128,10 +139,11 @@ public class MosquitoController : MonoBehaviour
 
         Player.GetComponent<Player>().HP -= MosquitoDamage;
 
-        if (GameManager.instance.vibrateSwitch == true)
-            Handheld.Vibrate();
         // Attacked Sound Start
         GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().AttackedStart();
+
+        if (GameManager.instance.vibrateSwitch == true)
+            Handheld.Vibrate();
 
         /* Attack
         * To Destroy Mosquito When Animator over
@@ -163,7 +175,7 @@ public class MosquitoController : MonoBehaviour
         int Damaged = Animator.StringToHash("Damaged");
         animator.SetBool(Damaged, true);
 
-        AudioClip Temp = MqAudioSource.clip;
+        Temp = MqAudioSource.clip;
         MqAudioSource.clip = GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().MosquitoHeated;
         MqAudioSource.Play();
 
