@@ -19,6 +19,10 @@ public class UIManager : MonoBehaviour
     public CanvasGroup Damage_Cover;
     public CanvasGroup Play_Cover;
     public CanvasGroup PlayInside_Cover;
+    public GameObject tutorial1;
+    public GameObject tutorialButton1;
+    public GameObject tutorial2;
+    public GameObject tutorialButton2;
 
     private int HP; // Player HP replica
     private float tempVolume; // temporary save the volume
@@ -52,6 +56,8 @@ public class UIManager : MonoBehaviour
     {
         tutorialScreen.gameObject.SetActive(true);
         mainScreen.gameObject.SetActive(false);
+        tutorial1.gameObject.SetActive(true);
+        tutorialButton1.gameObject.SetActive(true);
     }
 
     // Option button
@@ -69,9 +75,19 @@ public class UIManager : MonoBehaviour
         optionScreen.gameObject.SetActive(false);
         gameoverScreen.gameObject.SetActive(false);
         mainBeforeScreen.gameObject.SetActive(false);
+        tutorial2.gameObject.SetActive(false);
+        tutorialButton2.gameObject.SetActive(false);
         mainScreen.gameObject.SetActive(true);
         GameManager.instance.optionSwitch = false;
         GameManager.instance.gamestatus = 0;
+    }
+
+    public void mainTutorialNext()
+    {
+        tutorial1.gameObject.SetActive(false);
+        tutorialButton1.gameObject.SetActive(false);
+        tutorial2.gameObject.SetActive(true);
+        tutorialButton2.gameObject.SetActive(true);
     }
 
 
