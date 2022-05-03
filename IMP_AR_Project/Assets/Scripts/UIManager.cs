@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
     public CanvasGroup Damage_Cover;
     public CanvasGroup Play_Cover;
     public CanvasGroup PlayInside_Cover;
+    public CanvasGroup PlusCount_Effect;
+    public CanvasGroup PlusHP_Effect;
     public GameObject tutorial1;
     public GameObject tutorialButton1;
     public GameObject tutorial2;
@@ -148,6 +150,7 @@ public class UIManager : MonoBehaviour
         if (GameManager.instance.gamestatus == 4)
         {
             StartCoroutine(DamageFade());
+            StartCoroutine(GameObject.Find("UI").GetComponent<UIManager>().EffectPlusCountFade());
             GameManager.instance.gamestatus = 2;
         }
     }
@@ -319,6 +322,44 @@ public class UIManager : MonoBehaviour
 
         // 8. Game Start
         mainStart();
+        yield return null;
+    }
+
+    public IEnumerator EffectPlusCountFade()
+    {
+        CanvasGroup canvasGroup = PlusCount_Effect;
+        canvasGroup.gameObject.SetActive(true);
+        canvasGroup.alpha = 1;
+        Vector3 tempPosition = canvasGroup.transform.position;
+
+        while (canvasGroup.alpha > 0)
+        {
+            canvasGroup.transform.position += new Vector3(0, 50, 0) * Time.deltaTime;
+            canvasGroup.alpha -= 1.5f * Time.deltaTime;
+            yield return new WaitForSeconds(0.0005f);
+        }
+
+        canvasGroup.transform.position = tempPosition;
+        canvasGroup.gameObject.SetActive(false);
+        yield return null;
+    }
+
+    public IEnumerator EffectPlusHPFade()
+    {
+        CanvasGroup canvasGroup = PlusHP_Effect;
+        canvasGroup.gameObject.SetActive(true);
+        canvasGroup.alpha = 1;
+        Vector3 tempPosition = canvasGroup.transform.position;
+
+        while (canvasGroup.alpha > 0)
+        {
+            canvasGroup.transform.position += new Vector3(0, 50, 0) * Time.deltaTime;
+            canvasGroup.alpha -= 1.5f * Time.deltaTime;
+            yield return new WaitForSeconds(0.0005f);
+        }
+
+        canvasGroup.transform.position = tempPosition;
+        canvasGroup.gameObject.SetActive(false);
         yield return null;
     }
 

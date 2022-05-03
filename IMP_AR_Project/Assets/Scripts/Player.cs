@@ -147,6 +147,7 @@ public class Player : MonoBehaviour
                         // KilledMosquito Sound Start
                         GameObject.Find("SoundEffect").GetComponent<SoundEffectController>().KilledMosquitoStart();
 
+                        StartCoroutine(GameObject.Find("UI").GetComponent<UIManager>().EffectPlusCountFade());
                         GameManager.instance.Score++;
                         GameManager.instance.TimeLimit = 10f;
                         GameManager.instance.TimerBar.value = 1;
@@ -161,6 +162,7 @@ public class Player : MonoBehaviour
                 else if (hit.collider != null && hit.collider.CompareTag("Potion"))
                 {
                     Debug.Log("Heating Potion!!");
+                    StartCoroutine(GameObject.Find("UI").GetComponent<UIManager>().EffectPlusHPFade());
                     if (HP < 3)
                     {
                         Debug.Log("HP Before Eating Potion : " + HP);
