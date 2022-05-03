@@ -118,10 +118,6 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.Save();
         }
 
-        Debug.Log(TimeCount);
-        Debug.Log(timeMinute);
-        Debug.Log(savehighSecond);
-        Debug.Log(savehighMinute);
         if (timeMinute > savehighMinute || TimeCount > savehighSecond && timeMinute >= savehighMinute)
         {
             PlayerPrefs.SetInt("highMinute", timeMinute);
@@ -130,11 +126,6 @@ public class GameManager : MonoBehaviour
             savehighSecond = PlayerPrefs.GetFloat("highSecond", 0);
             PlayerPrefs.Save();
         }
-
-    }
-
-    public void controlSound(float vol)
-    {
 
     }
 
@@ -220,7 +211,7 @@ public class GameManager : MonoBehaviour
     {
         TimeCount += Time.deltaTime;
 
-        if (TimeCount >= 60.0f)
+        if (TimeCount >= 60.0f - Time.deltaTime)
         {
             TimeCount = 0;
             timeMinute++;
@@ -240,7 +231,7 @@ public class GameManager : MonoBehaviour
             for (int i = spawner.Mosquitos.Count - 1; i >= 0; i--)
             {
                 if (spawner.Mosquitos[i].activeInHierarchy)
-                spawner.Mosquitos[i].GetComponent<MosquitoController>().ReadyToAttack();
+                    spawner.Mosquitos[i].GetComponent<MosquitoController>().ReadyToAttack();
             }
             RTA = false;
         }
@@ -255,8 +246,8 @@ public class GameManager : MonoBehaviour
         // Mosquitos Attack
         for (int i = spawner.Mosquitos.Count - 1; i >= 0; i--)
         {
-            if(spawner.Mosquitos[i].activeInHierarchy)
-            spawner.Mosquitos[i].GetComponent<MosquitoController>().MosquitoAttack();
+            if (spawner.Mosquitos[i].activeInHierarchy)
+                spawner.Mosquitos[i].GetComponent<MosquitoController>().MosquitoAttack();
         }
 
         RTA = true;
